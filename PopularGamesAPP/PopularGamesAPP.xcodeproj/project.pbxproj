@@ -1,0 +1,634 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D365D65E2A60A0B80058E77B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D65D2A60A0B80058E77B /* AppDelegate.swift */; };
+		D365D6602A60A0B80058E77B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D65F2A60A0B80058E77B /* SceneDelegate.swift */; };
+		D365D6622A60A0B80058E77B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D6612A60A0B80058E77B /* ViewController.swift */; };
+		D365D6682A60A0B80058E77B /* PopularGamesAPP.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D365D6662A60A0B80058E77B /* PopularGamesAPP.xcdatamodeld */; };
+		D365D66A2A60A0B80058E77B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D365D6692A60A0B80058E77B /* Assets.xcassets */; };
+		D365D66D2A60A0B90058E77B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D365D66B2A60A0B90058E77B /* LaunchScreen.storyboard */; };
+		D365D6782A60A0B90058E77B /* PopularGamesAPPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D6772A60A0B90058E77B /* PopularGamesAPPTests.swift */; };
+		D365D6822A60A0B90058E77B /* PopularGamesAPPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D6812A60A0B90058E77B /* PopularGamesAPPUITests.swift */; };
+		D365D6842A60A0B90058E77B /* PopularGamesAPPUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D6832A60A0B90058E77B /* PopularGamesAPPUITestsLaunchTests.swift */; };
+		D365D6932A60A0D60058E77B /* GamesAPI in Frameworks */ = {isa = PBXBuildFile; productRef = D365D6922A60A0D60058E77B /* GamesAPI */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D365D6742A60A0B90058E77B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D365D6522A60A0B70058E77B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D365D6592A60A0B80058E77B;
+			remoteInfo = PopularGamesAPP;
+		};
+		D365D67E2A60A0B90058E77B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D365D6522A60A0B70058E77B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D365D6592A60A0B80058E77B;
+			remoteInfo = PopularGamesAPP;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D365D65A2A60A0B80058E77B /* PopularGamesAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PopularGamesAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D365D65D2A60A0B80058E77B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D365D65F2A60A0B80058E77B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		D365D6612A60A0B80058E77B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D365D6672A60A0B80058E77B /* PopularGamesAPP.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PopularGamesAPP.xcdatamodel; sourceTree = "<group>"; };
+		D365D6692A60A0B80058E77B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D365D66C2A60A0B90058E77B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D365D66E2A60A0B90058E77B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D365D6732A60A0B90058E77B /* PopularGamesAPPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopularGamesAPPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D365D6772A60A0B90058E77B /* PopularGamesAPPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularGamesAPPTests.swift; sourceTree = "<group>"; };
+		D365D67D2A60A0B90058E77B /* PopularGamesAPPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopularGamesAPPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D365D6812A60A0B90058E77B /* PopularGamesAPPUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularGamesAPPUITests.swift; sourceTree = "<group>"; };
+		D365D6832A60A0B90058E77B /* PopularGamesAPPUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularGamesAPPUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D365D6902A60A0C90058E77B /* GamesAPI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = GamesAPI; path = ../GamesAPI; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D365D6572A60A0B80058E77B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D365D6932A60A0D60058E77B /* GamesAPI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D365D6702A60A0B90058E77B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D365D67A2A60A0B90058E77B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D365D6512A60A0B70058E77B = {
+			isa = PBXGroup;
+			children = (
+				D365D6902A60A0C90058E77B /* GamesAPI */,
+				D365D65C2A60A0B80058E77B /* PopularGamesAPP */,
+				D365D6762A60A0B90058E77B /* PopularGamesAPPTests */,
+				D365D6802A60A0B90058E77B /* PopularGamesAPPUITests */,
+				D365D65B2A60A0B80058E77B /* Products */,
+				D365D6912A60A0D60058E77B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D365D65B2A60A0B80058E77B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D365D65A2A60A0B80058E77B /* PopularGamesAPP.app */,
+				D365D6732A60A0B90058E77B /* PopularGamesAPPTests.xctest */,
+				D365D67D2A60A0B90058E77B /* PopularGamesAPPUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D365D65C2A60A0B80058E77B /* PopularGamesAPP */ = {
+			isa = PBXGroup;
+			children = (
+				D365D65D2A60A0B80058E77B /* AppDelegate.swift */,
+				D365D65F2A60A0B80058E77B /* SceneDelegate.swift */,
+				D365D6612A60A0B80058E77B /* ViewController.swift */,
+				D365D6692A60A0B80058E77B /* Assets.xcassets */,
+				D365D66B2A60A0B90058E77B /* LaunchScreen.storyboard */,
+				D365D66E2A60A0B90058E77B /* Info.plist */,
+				D365D6662A60A0B80058E77B /* PopularGamesAPP.xcdatamodeld */,
+			);
+			path = PopularGamesAPP;
+			sourceTree = "<group>";
+		};
+		D365D6762A60A0B90058E77B /* PopularGamesAPPTests */ = {
+			isa = PBXGroup;
+			children = (
+				D365D6772A60A0B90058E77B /* PopularGamesAPPTests.swift */,
+			);
+			path = PopularGamesAPPTests;
+			sourceTree = "<group>";
+		};
+		D365D6802A60A0B90058E77B /* PopularGamesAPPUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D365D6812A60A0B90058E77B /* PopularGamesAPPUITests.swift */,
+				D365D6832A60A0B90058E77B /* PopularGamesAPPUITestsLaunchTests.swift */,
+			);
+			path = PopularGamesAPPUITests;
+			sourceTree = "<group>";
+		};
+		D365D6912A60A0D60058E77B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D365D6592A60A0B80058E77B /* PopularGamesAPP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D365D6872A60A0B90058E77B /* Build configuration list for PBXNativeTarget "PopularGamesAPP" */;
+			buildPhases = (
+				D365D6562A60A0B80058E77B /* Sources */,
+				D365D6572A60A0B80058E77B /* Frameworks */,
+				D365D6582A60A0B80058E77B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PopularGamesAPP;
+			packageProductDependencies = (
+				D365D6922A60A0D60058E77B /* GamesAPI */,
+			);
+			productName = PopularGamesAPP;
+			productReference = D365D65A2A60A0B80058E77B /* PopularGamesAPP.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D365D6722A60A0B90058E77B /* PopularGamesAPPTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D365D68A2A60A0B90058E77B /* Build configuration list for PBXNativeTarget "PopularGamesAPPTests" */;
+			buildPhases = (
+				D365D66F2A60A0B90058E77B /* Sources */,
+				D365D6702A60A0B90058E77B /* Frameworks */,
+				D365D6712A60A0B90058E77B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D365D6752A60A0B90058E77B /* PBXTargetDependency */,
+			);
+			name = PopularGamesAPPTests;
+			productName = PopularGamesAPPTests;
+			productReference = D365D6732A60A0B90058E77B /* PopularGamesAPPTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D365D67C2A60A0B90058E77B /* PopularGamesAPPUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D365D68D2A60A0B90058E77B /* Build configuration list for PBXNativeTarget "PopularGamesAPPUITests" */;
+			buildPhases = (
+				D365D6792A60A0B90058E77B /* Sources */,
+				D365D67A2A60A0B90058E77B /* Frameworks */,
+				D365D67B2A60A0B90058E77B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D365D67F2A60A0B90058E77B /* PBXTargetDependency */,
+			);
+			name = PopularGamesAPPUITests;
+			productName = PopularGamesAPPUITests;
+			productReference = D365D67D2A60A0B90058E77B /* PopularGamesAPPUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D365D6522A60A0B70058E77B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					D365D6592A60A0B80058E77B = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					D365D6722A60A0B90058E77B = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = D365D6592A60A0B80058E77B;
+					};
+					D365D67C2A60A0B90058E77B = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = D365D6592A60A0B80058E77B;
+					};
+				};
+			};
+			buildConfigurationList = D365D6552A60A0B70058E77B /* Build configuration list for PBXProject "PopularGamesAPP" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D365D6512A60A0B70058E77B;
+			productRefGroup = D365D65B2A60A0B80058E77B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D365D6592A60A0B80058E77B /* PopularGamesAPP */,
+				D365D6722A60A0B90058E77B /* PopularGamesAPPTests */,
+				D365D67C2A60A0B90058E77B /* PopularGamesAPPUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D365D6582A60A0B80058E77B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D365D66D2A60A0B90058E77B /* LaunchScreen.storyboard in Resources */,
+				D365D66A2A60A0B80058E77B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D365D6712A60A0B90058E77B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D365D67B2A60A0B90058E77B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D365D6562A60A0B80058E77B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D365D6622A60A0B80058E77B /* ViewController.swift in Sources */,
+				D365D6682A60A0B80058E77B /* PopularGamesAPP.xcdatamodeld in Sources */,
+				D365D65E2A60A0B80058E77B /* AppDelegate.swift in Sources */,
+				D365D6602A60A0B80058E77B /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D365D66F2A60A0B90058E77B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D365D6782A60A0B90058E77B /* PopularGamesAPPTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D365D6792A60A0B90058E77B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D365D6842A60A0B90058E77B /* PopularGamesAPPUITestsLaunchTests.swift in Sources */,
+				D365D6822A60A0B90058E77B /* PopularGamesAPPUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D365D6752A60A0B90058E77B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D365D6592A60A0B80058E77B /* PopularGamesAPP */;
+			targetProxy = D365D6742A60A0B90058E77B /* PBXContainerItemProxy */;
+		};
+		D365D67F2A60A0B90058E77B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D365D6592A60A0B80058E77B /* PopularGamesAPP */;
+			targetProxy = D365D67E2A60A0B90058E77B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D365D66B2A60A0B90058E77B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D365D66C2A60A0B90058E77B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D365D6852A60A0B90058E77B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D365D6862A60A0B90058E77B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D365D6882A60A0B90058E77B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 698WTL9S57;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PopularGamesAPP/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = asudenisatiras.PopularGamesAPP;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D365D6892A60A0B90058E77B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 698WTL9S57;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PopularGamesAPP/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = asudenisatiras.PopularGamesAPP;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D365D68B2A60A0B90058E77B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 698WTL9S57;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = asudenisatiras.PopularGamesAPPTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PopularGamesAPP.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PopularGamesAPP";
+			};
+			name = Debug;
+		};
+		D365D68C2A60A0B90058E77B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 698WTL9S57;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = asudenisatiras.PopularGamesAPPTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PopularGamesAPP.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PopularGamesAPP";
+			};
+			name = Release;
+		};
+		D365D68E2A60A0B90058E77B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 698WTL9S57;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = asudenisatiras.PopularGamesAPPUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PopularGamesAPP;
+			};
+			name = Debug;
+		};
+		D365D68F2A60A0B90058E77B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 698WTL9S57;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = asudenisatiras.PopularGamesAPPUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PopularGamesAPP;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D365D6552A60A0B70058E77B /* Build configuration list for PBXProject "PopularGamesAPP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D365D6852A60A0B90058E77B /* Debug */,
+				D365D6862A60A0B90058E77B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D365D6872A60A0B90058E77B /* Build configuration list for PBXNativeTarget "PopularGamesAPP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D365D6882A60A0B90058E77B /* Debug */,
+				D365D6892A60A0B90058E77B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D365D68A2A60A0B90058E77B /* Build configuration list for PBXNativeTarget "PopularGamesAPPTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D365D68B2A60A0B90058E77B /* Debug */,
+				D365D68C2A60A0B90058E77B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D365D68D2A60A0B90058E77B /* Build configuration list for PBXNativeTarget "PopularGamesAPPUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D365D68E2A60A0B90058E77B /* Debug */,
+				D365D68F2A60A0B90058E77B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D365D6922A60A0D60058E77B /* GamesAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GamesAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		D365D6662A60A0B80058E77B /* PopularGamesAPP.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D365D6672A60A0B80058E77B /* PopularGamesAPP.xcdatamodel */,
+			);
+			currentVersion = D365D6672A60A0B80058E77B /* PopularGamesAPP.xcdatamodel */;
+			path = PopularGamesAPP.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = D365D6522A60A0B70058E77B /* Project object */;
+}

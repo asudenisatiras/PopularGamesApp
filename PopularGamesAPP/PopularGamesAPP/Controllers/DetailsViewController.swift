@@ -8,8 +8,12 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
+    public var gameName: String?
+       public var gameImage: UIImage?
     private var scrollView: UIScrollView!
        private var contentView: UIView!
+    public var releasedDate:String?
+    public var metacriticR: String?
     private var imageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 12
@@ -74,6 +78,20 @@ extension DetailsViewController {
                 metacriticRate.translatesAutoresizingMaskIntoConstraints = false
                 descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
                 favoriteButton.translatesAutoresizingMaskIntoConstraints = false
+        if let gameName = gameName {
+                nameOfGameLabel.text = gameName
+            }
+
+            if let date = releasedDate {
+                releaseDate.text = date
+            }
+        if let metacritic = metacriticR {
+            metacriticRate.text = metacritic
+        }
+        if let gameImage = gameImage {
+            imageView.image = gameImage
+        }
+
     }
     private func layout() {
         view.addSubview(imageView)

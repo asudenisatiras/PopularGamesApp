@@ -14,6 +14,7 @@ class DetailsViewController: UIViewController {
        private var contentView: UIView!
     public var releasedDate:String?
     public var metacriticR: String?
+    public var detailsL: String?
     private var imageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 12
@@ -90,6 +91,9 @@ extension DetailsViewController {
         }
         if let gameImage = gameImage {
             imageView.image = gameImage
+        }
+        if let details = detailsL {
+            descriptionLabel.text = details
         }
 
     }

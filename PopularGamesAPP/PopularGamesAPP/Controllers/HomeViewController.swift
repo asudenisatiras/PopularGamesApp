@@ -434,11 +434,11 @@
 import UIKit
 import GamesAPI
 class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecognizerDelegate{
-
+    var allGames: [Games] = []
     private let reuseIdentifier = "FavoriteCell"
     var pageViewController: UIPageViewController!
-       var pages: [UIViewController] = []
-       var pageControl: UIPageControl!
+    var pages: [UIViewController] = []
+    var pageControl: UIPageControl!
     var collectionView: UICollectionView!
     var games: [Games] = []
     let service = GamesService()
@@ -450,54 +450,41 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecogn
         layout()
         fetchGames()
         setupp()
-//        startAutoScrollTimer()
+
        
     }
+
     fileprivate func fetchGames() {
-        service.fetchGames() { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let games):
-                DispatchQueue.main.async {
-                    let firstThreeGames = Array(games.prefix(3)) // İlk üç oyun
-                    self.pages = firstThreeGames.map { self.createPageViewController(with: $0) }
-                    self.pageControl.numberOfPages = self.pages.count
-                    
-                    self.games = Array(games.dropFirst(3)) // Geri kalan oyunlar
-                    self.collectionView.reloadData()
-                    
-                    // Eklenen yeni kod
-                    self.pageViewController.setViewControllers([self.pages.first].compactMap { $0 }, direction: .forward, animated: true, completion: nil)
-                }
-            case .failure(let error):
-                print("FetchGames Error: \(error)")
-            }
-        }
-    }
-//    private func startAutoScrollTimer() {
-//        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(scrollToNextPage), userInfo: nil, repeats: true)
-//    }
-//    @objc private func scrollToNextPage() {
-//        currentPageIndex += 1
-//        if currentPageIndex >= pages.count {
-//            currentPageIndex = 0
-//        }
-//        let nextViewController = pages[currentPageIndex]
-//        pageViewController.setViewControllers([nextViewController], direction: .forward, animated: true, completion: nil)
-//        pageControl.currentPage = currentPageIndex
-//    }
+           service.fetchGames() { [weak self] result in
+               guard let self = self else { return }
+               switch result {
+               case .success(let games):
+                   DispatchQueue.main.async {
+                       self.allGames = games
+                       let firstThreeGames = Array(games.prefix(3))
+                       self.pages = firstThreeGames.map { self.createPageViewController(with: $0) }
+                       self.pageControl.numberOfPages = self.pages.count
+                       
+                       
+                       if self.navigationItem.searchController?.searchBar.text?.isEmpty == true {
+                          
+                           self.games = Array(games.dropFirst(3))
+                       } else {
+                           
+                           self.performSearch()
+                       }
+                       
+                       self.collectionView.reloadData()
+                       
+                       
+                       self.pageViewController.setViewControllers([self.pages.first].compactMap { $0 }, direction: .forward, animated: true, completion: nil)
+                   }
+               case .failure(let error):
+                   print("FetchGames Error: \(error)")
+               }
+           }
+       }
 
-
-//    private func createPageViewController(with game: Games) -> UIViewController {
-//        let detailsViewController = DetailsViewController()
-//        detailsViewController.gameName = game.name
-//        detailsViewController.releasedDate = game.released
-//        detailsViewController.metacriticR = game.metacritic.map { String($0) }
-//        if let backgroundImageURLString = game.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
-//            detailsViewController.gameImage = UIImage(data: imageData)
-//        }
-//        return detailsViewController
-//    }
     private func createPageViewController(with game: Games) -> UIViewController {
         let detailsViewController = DetailsViewController()
         detailsViewController.gameName = game.name
@@ -517,22 +504,10 @@ extension HomeViewController {
     private func setup(){
         
         view.backgroundColor = .white
-//        let firstPage = UIViewController()
-//                firstPage.view.backgroundColor = .red
-//                let secondPage = UIViewController()
-//                secondPage.view.backgroundColor = .green
-//                let thirdPage = UIViewController()
-//                thirdPage.view.backgroundColor = .blue
-
-
-              //  pages = [firstPage, secondPage, thirdPage]
-
-
                 pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
                 pageViewController.view.layer.cornerRadius = 12
                 pageViewController.dataSource = self
                 pageViewController.delegate = self
-            //    pageViewController.setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
 
                 addChild(pageViewController)
                 view.addSubview(pageViewController.view)
@@ -617,20 +592,7 @@ extension HomeViewController: UIPageViewControllerDataSource, UIPageViewControll
            pageViewController.view.addGestureRecognizer(tapGestureRecognizer)
            tapGestureRecognizer.delegate = self
        }
-    
-//    @objc private func pageViewControllerTapped(_ gestureRecognizer: UITapGestureRecognizer) {
-//        if let currentViewController = pageViewController.viewControllers?.first, let currentIndex = pages.firstIndex(of: currentViewController) {
-//            let selectedGame = games[currentIndex]
-//            let detailsViewController = DetailsViewController()
-//            detailsViewController.gameName = selectedGame.name
-//            detailsViewController.releasedDate = selectedGame.released
-//            detailsViewController.metacriticR = selectedGame.metacritic.map { String($0) }
-//            if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
-//                detailsViewController.gameImage = UIImage(data: imageData)
-//            }
-//            navigationController?.pushViewController(detailsViewController, animated: true)
-//        }
-//    }
+
     @objc private func pageViewControllerTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         if let currentViewController = pageViewController.viewControllers?.first as? DetailsViewController {
             if let currentIndex = pages.firstIndex(of: currentViewController) {
@@ -667,24 +629,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return cell
 
     }
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//          let detailsViewController = DetailsViewController()
-//          navigationController?.pushViewController(detailsViewController, animated: true)
-//      }
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let selectedGame = games[indexPath.row]
-//        let detailsViewController = DetailsViewController()
-//        detailsViewController.gameName = selectedGame.name
-//        detailsViewController.releasedDate = selectedGame.released
-//        detailsViewController.metacriticR = selectedGame.metacritic.map { String($0) }
-//        if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
-//               detailsViewController.gameImage = UIImage(data: imageData)
-//           }
-//        navigationController?.pushViewController(detailsViewController, animated: true)
-//    }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedGame = games[indexPath.row]
-        
         service.fetchGameDetails(with: selectedGame.id!) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -724,33 +671,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
     }
+    
 }
 
-//extension HomeViewController {
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchText.isEmpty {
-//            // Arama metni boşsa, tüm oyunları göster
-//            fetchGames()
-//        } else {
-//            // Arama metni doluysa, arama yap ve sonuçları güncelle
-//            service.searchGames(with: searchText) { [weak self] (result: Result<[Games], Error>) in
-//                guard let self = self else { return }
-//                switch result {
-//                case .success(let games):
-//                    DispatchQueue.main.async {
-//                        self.games = games
-//                        self.collectionView.reloadData()
-//                    }
-//                case .failure(let error):
-//                    print("SearchGames Error: \(error)")
-//                }
-//            }
-//        }
-//    }
-//}
-
 extension HomeViewController {
-    // ...
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch), object: nil)
@@ -767,19 +691,9 @@ extension HomeViewController {
             return
         }
 
-        service.searchGames(with: searchText) { [weak self] (result: Result<[Games], Error>) in
-            guard let self = self else { return }
-            switch result {
-            case .success(let games):
-                DispatchQueue.main.async {
-                    self.games = games
-                    self.collectionView.reloadData()
-                    self.fetchGameDetailsForFirstResult()
-                }
-            case .failure(let error):
-                print("SearchGames Error: \(error)")
-            }
-        }
+        let filteredGames = allGames.filter { ($0.name ?? "").lowercased().contains(searchText.lowercased()) }
+        games = filteredGames // Oyunları filtrelenmiş sonuçlarla güncelle
+        collectionView.reloadData()
     }
 
     private func fetchGameDetailsForFirstResult() {
@@ -803,10 +717,8 @@ extension HomeViewController {
         print("Metacritic Score: \(game.metacritic ?? 0)")
         print("Background Image URL: \(game.backgroundImage ?? "")")
         print("Description: \(videoGame.description ?? "")")
-        // Diğer detay verilerini burada yazdırabilirsiniz
+       
     }
-
-
 }
 
 

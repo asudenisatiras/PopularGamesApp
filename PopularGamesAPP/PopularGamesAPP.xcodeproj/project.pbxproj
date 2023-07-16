@@ -22,6 +22,7 @@
 		D365D69E2A60A2280058E77B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D69D2A60A2280058E77B /* FavoritesViewController.swift */; };
 		D365D6A02A60A2A80058E77B /* GamesListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D69F2A60A2A70058E77B /* GamesListCollectionViewCell.swift */; };
 		D365D6A22A60A2E90058E77B /* FavoritesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D6A12A60A2E90058E77B /* FavoritesCollectionViewCell.swift */; };
+		D36E90F22A64820A00E528F7 /* CoreData+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E90F12A64820A00E528F7 /* CoreData+Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		D365D69D2A60A2280058E77B /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		D365D69F2A60A2A70058E77B /* GamesListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesListCollectionViewCell.swift; sourceTree = "<group>"; };
 		D365D6A12A60A2E90058E77B /* FavoritesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCollectionViewCell.swift; sourceTree = "<group>"; };
+		D36E90F12A64820A00E528F7 /* CoreData+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Helpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 		D365D65C2A60A0B80058E77B /* PopularGamesAPP */ = {
 			isa = PBXGroup;
 			children = (
+				D36E90F02A6481F400E528F7 /* Helpers */,
 				D365D6962A60A1E10058E77B /* Files */,
 				D365D6952A60A1D80058E77B /* Cells */,
 				D365D6942A60A1CF0058E77B /* Controllers */,
@@ -176,6 +179,14 @@
 				D365D66B2A60A0B90058E77B /* LaunchScreen.storyboard */,
 			);
 			path = Files;
+			sourceTree = "<group>";
+		};
+		D36E90F02A6481F400E528F7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D36E90F12A64820A00E528F7 /* CoreData+Helpers.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,6 +326,7 @@
 				D365D69E2A60A2280058E77B /* FavoritesViewController.swift in Sources */,
 				D365D69A2A60A20E0058E77B /* MainTabBarController.swift in Sources */,
 				D365D6682A60A0B80058E77B /* PopularGamesAPP.xcdatamodeld in Sources */,
+				D36E90F22A64820A00E528F7 /* CoreData+Helpers.swift in Sources */,
 				D365D69C2A60A21A0058E77B /* DetailsViewController.swift in Sources */,
 				D365D65E2A60A0B80058E77B /* AppDelegate.swift in Sources */,
 				D365D6602A60A0B80058E77B /* SceneDelegate.swift in Sources */,

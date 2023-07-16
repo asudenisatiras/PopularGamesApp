@@ -20,7 +20,7 @@ public struct VideoGames: Decodable {
 
 // MARK: - Result
 public struct Games: Decodable {
-public  let id: Int?
+public  let id: Int32?
 public  let name, released: String?
 public  let backgroundImage: String?
 public  let rating: Double?

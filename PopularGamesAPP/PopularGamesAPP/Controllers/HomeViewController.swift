@@ -489,6 +489,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecogn
         let detailsViewController = DetailsViewController()
         detailsViewController.gameName = game.name
         detailsViewController.releasedDate = game.released
+       // detailsViewController.detailsL = game.
         detailsViewController.metacriticR = game.metacritic.map { String($0) }
         if let backgroundImageURLString = game.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
             detailsViewController.gameImage = UIImage(data: imageData)
@@ -593,28 +594,54 @@ extension HomeViewController: UIPageViewControllerDataSource, UIPageViewControll
            tapGestureRecognizer.delegate = self
        }
 
+//    @objc private func pageViewControllerTapped(_ gestureRecognizer: UITapGestureRecognizer) {
+//        if let currentViewController = pageViewController.viewControllers?.first as? DetailsViewController {
+//            if let currentIndex = pages.firstIndex(of: currentViewController) {
+//                let selectedGame = games[currentIndex]
+//                currentViewController.gameName = selectedGame.name
+//                currentViewController.releasedDate = selectedGame.released
+//                currentViewController.metacriticR = selectedGame.metacritic.map { String($0) }
+//                if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString) {
+//                    URLSession.shared.dataTask(with: backgroundImageURL) { [weak currentViewController] (data, response, error) in
+//                        guard let data = data, let image = UIImage(data: data), error == nil else {
+//                            return
+//                        }
+//                        DispatchQueue.main.async {
+//                            currentViewController?.gameImage = image
+//                        }
+//                    }.resume()
+//                }
+//
+//                navigationController?.pushViewController(currentViewController, animated: true)
+//            }
+//        }
+//    }
     @objc private func pageViewControllerTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         if let currentViewController = pageViewController.viewControllers?.first as? DetailsViewController {
             if let currentIndex = pages.firstIndex(of: currentViewController) {
                 let selectedGame = games[currentIndex]
-                currentViewController.gameName = selectedGame.name
-                currentViewController.releasedDate = selectedGame.released
-                currentViewController.metacriticR = selectedGame.metacritic.map { String($0) }
-                if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString) {
-                    URLSession.shared.dataTask(with: backgroundImageURL) { [weak currentViewController] (data, response, error) in
-                        guard let data = data, let image = UIImage(data: data), error == nil else {
-                            return
-                        }
+                service.fetchGameDetails(with: Int(selectedGame.id!)) { [unowned self] result in
+                    switch result {
+                    case .success(let gameDetails):
                         DispatchQueue.main.async {
-                            currentViewController?.gameImage = image
+                            // currentViewController kullanarak mevcut DetailsViewController'ı güncelle
+                            currentViewController.gameName = selectedGame.name
+                            currentViewController.releasedDate = selectedGame.released
+                            currentViewController.metacriticR = selectedGame.metacritic.map { String($0) }
+                            currentViewController.detailsL = gameDetails.description
+                            if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
+                                currentViewController.gameImage = UIImage(data: imageData)
+                            }
+                            self.navigationController?.pushViewController(currentViewController, animated: true)
                         }
-                    }.resume()
+                    case .failure(let error):
+                        print("FetchGameDetails Error: \(error)")
+                    }
                 }
-
-                navigationController?.pushViewController(currentViewController, animated: true)
             }
         }
     }
+
 
 }
 
@@ -632,7 +659,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedGame = games[indexPath.row]
-        service.fetchGameDetails(with: selectedGame.id!) { [weak self] result in
+        service.fetchGameDetails(with: Int(selectedGame.id!)) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let gameDetails):
@@ -642,6 +669,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     detailsViewController.releasedDate = selectedGame.released
                     detailsViewController.metacriticR = selectedGame.metacritic.map { String($0) }
                     detailsViewController.detailsL = gameDetails.description
+                    detailsViewController.gameid = selectedGame.id
                     if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
                         detailsViewController.gameImage = UIImage(data: imageData)
                     }
@@ -698,7 +726,7 @@ extension HomeViewController {
 
     private func fetchGameDetailsForFirstResult() {
         if let firstGame = games.first {
-            service.fetchGameDetails(with: firstGame.id!) { [weak self] result in
+            service.fetchGameDetails(with: Int(firstGame.id!)) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(let videoGameDetails):
@@ -720,6 +748,3 @@ extension HomeViewController {
        
     }
 }
-
-
-

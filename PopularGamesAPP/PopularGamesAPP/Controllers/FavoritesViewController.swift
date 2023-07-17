@@ -69,6 +69,8 @@ class FavoriteViewController: UIViewController {
     private let reuseIdentifier = "FavoriteCell"
      var collectionView: UICollectionView!
     var favoriteGames: [GamesCoreData] = []
+    var games: [Games] = []
+    let service = GamesService()
     private var deleteAllFavoritesButton: UIButton = {
         let button = UIButton()
         button.imageView?.image = UIImage(systemName: "trash")
@@ -153,19 +155,46 @@ extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewData
 
         return cell
     }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//           let game = favoriteGames[indexPath.item]
+//
+//           // Instantiate the DetailsViewController and set its properties based on the selected game.
+//           let detailsViewController = DetailsViewController()
+//           detailsViewController.gameName = game.name
+//           detailsViewController.releasedDate = game.released
+//
+//           // ... Set other properties as needed for the DetailsViewController.
+//
+//           // Push the DetailsViewController onto the navigation stack to navigate back to the details page.
+//           self.navigationController?.pushViewController(detailsViewController, animated: true)
+//       }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-           let game = favoriteGames[indexPath.item]
+        let selectedGame = favoriteGames[indexPath.row]
+        service.fetchGameDetails(with: Int(selectedGame.id)) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let gameDetails):
+                DispatchQueue.main.async {
+                    let detailsViewController = DetailsViewController()
+                    detailsViewController.gameName = selectedGame.name
+                    detailsViewController.releasedDate = selectedGame.released
+                
+                    detailsViewController.detailsL = gameDetails.description
+                    detailsViewController.gameid = selectedGame.id
+                    if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
+                        detailsViewController.gameImage = UIImage(data: imageData)
+                    }
+                    detailsViewController.hidesBottomBarWhenPushed = true
+                    
+                    self.navigationController?.pushViewController(detailsViewController, animated: true)
+                }
+            case .failure(let error):
+                print("FetchGameDetails Error: \(error)")
+            }
+        }
+    }
 
-           // Instantiate the DetailsViewController and set its properties based on the selected game.
-           let detailsViewController = DetailsViewController()
-           detailsViewController.gameName = game.name
-           detailsViewController.releasedDate = game.released
-      //     detailsViewController.metacriticR = game.metacritic
-           // ... Set other properties as needed for the DetailsViewController.
-
-           // Push the DetailsViewController onto the navigation stack to navigate back to the details page.
-           self.navigationController?.pushViewController(detailsViewController, animated: true)
-       }}
+}
 
 
 extension FavoriteViewController: UICollectionViewDelegateFlowLayout{

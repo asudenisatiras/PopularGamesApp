@@ -127,11 +127,15 @@ class DetailsViewController: UIViewController {
     public var gameName: String?
     public var gameImage: UIImage?
     private var scrollView: UIScrollView!
-    private var contentView: UIView!
+        private var contentView: UIView!
     public var releasedDate:String?
     public var metacriticR: String?
     public var detailsL: String?
     public var gameid: Int32?
+    convenience init(gameImage: UIImage?) {
+            self.init()
+            self.gameImage = gameImage
+        }
     public var imageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 12
@@ -212,7 +216,10 @@ extension DetailsViewController {
         if let details = detailsL {
             descriptionLabel.text = details
         }
-        
+        scrollView = UIScrollView()
+                scrollView.translatesAutoresizingMaskIntoConstraints = false
+                contentView = UIView()
+                contentView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func layout() {
@@ -237,8 +244,9 @@ extension DetailsViewController {
         ])
         let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
         navigationItem.rightBarButtonItem = favoriteBarButton
+        
     }
-   
+ 
     @objc private func favoriteButtonTapped() {
         guard let gameName = gameName,
               let releasedDate = releasedDate,

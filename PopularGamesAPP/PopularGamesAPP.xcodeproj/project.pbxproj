@@ -23,6 +23,7 @@
 		D365D6A02A60A2A80058E77B /* GamesListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D69F2A60A2A70058E77B /* GamesListCollectionViewCell.swift */; };
 		D365D6A22A60A2E90058E77B /* FavoritesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D6A12A60A2E90058E77B /* FavoritesCollectionViewCell.swift */; };
 		D36E90F22A64820A00E528F7 /* CoreData+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E90F12A64820A00E528F7 /* CoreData+Helpers.swift */; };
+		D36E90F82A65D9AE00E528F7 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E90F72A65D9AE00E528F7 /* PageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		D365D69F2A60A2A70058E77B /* GamesListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesListCollectionViewCell.swift; sourceTree = "<group>"; };
 		D365D6A12A60A2E90058E77B /* FavoritesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCollectionViewCell.swift; sourceTree = "<group>"; };
 		D36E90F12A64820A00E528F7 /* CoreData+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Helpers.swift"; sourceTree = "<group>"; };
+		D36E90F72A65D9AE00E528F7 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 				D365D6972A60A1FA0058E77B /* HomeViewController.swift */,
 				D365D69B2A60A21A0058E77B /* DetailsViewController.swift */,
 				D365D69D2A60A2280058E77B /* FavoritesViewController.swift */,
+				D36E90F72A65D9AE00E528F7 /* PageViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 			files = (
 				D365D6982A60A1FA0058E77B /* HomeViewController.swift in Sources */,
 				D365D69E2A60A2280058E77B /* FavoritesViewController.swift in Sources */,
+				D36E90F82A65D9AE00E528F7 /* PageViewController.swift in Sources */,
 				D365D69A2A60A20E0058E77B /* MainTabBarController.swift in Sources */,
 				D365D6682A60A0B80058E77B /* PopularGamesAPP.xcdatamodeld in Sources */,
 				D36E90F22A64820A00E528F7 /* CoreData+Helpers.swift in Sources */,

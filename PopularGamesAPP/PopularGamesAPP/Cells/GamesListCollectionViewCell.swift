@@ -135,20 +135,21 @@ class GamesListCollectionViewCell: UICollectionViewCell {
        let label = UILabel()
         label.text = "Game Name"
         label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.numberOfLines = 0
         label.textColor = .black
         return label
     }()
     public let ratesLabel: UILabel = {
        let label = UILabel()
         label.text = "Game Rate"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .black
         return label
     }()
     public let releasedDate: UILabel = {
        let label = UILabel()
         label.text = "Released Date"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
         return label
     }()
@@ -175,6 +176,15 @@ extension GamesListCollectionViewCell{
         releasedDate.translatesAutoresizingMaskIntoConstraints = false
         gameNameLabel.translatesAutoresizingMaskIntoConstraints = false
       //horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+        layer.borderColor = UIColor.lightGray.cgColor
+                layer.borderWidth = 1.0
+
+                // Set corner radius for the cell
+                layer.cornerRadius = 12
+
+                // Additional border style for the image view
+                gameImageView.layer.borderColor = UIColor.gray.cgColor
+                gameImageView.layer.borderWidth = 1.0
     }
     private func layout() {
         horizontalStackView = UIStackView()
@@ -188,8 +198,11 @@ extension GamesListCollectionViewCell{
         horizontalStackView.addArrangedSubview(fullStackView)
         
         NSLayoutConstraint.activate([
-            gameImageView.widthAnchor.constraint(equalToConstant: 100), // gameImageView'in belirli bir genişliği olsun
-            gameImageView.heightAnchor.constraint(equalTo: gameImageView.widthAnchor),
+            gameImageView.widthAnchor.constraint(equalToConstant: 100),
+                   gameImageView.heightAnchor.constraint(equalToConstant: 80),
+                   gameImageView.topAnchor.constraint(equalTo: topAnchor, constant: 5), // Add 3 points space from top
+                   gameImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            gameImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
             
             horizontalStackView.topAnchor.constraint(equalTo: topAnchor),
             horizontalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
@@ -208,7 +221,7 @@ extension GamesListCollectionViewCell{
 
      func configure(games: Games) {
         gameNameLabel.text = games.name
-        ratesLabel.text = String(format: "%.1f", games.rating ?? "")
+        ratesLabel.text = "Rating: \(String(format: "%.1f", games.rating ?? ""))"
          releasedDate.text = "Release Date: \(games.released ?? "")"
          if let artworkUrl = artworkUrl(for: games) {
              URLSession.shared.dataTask(with: artworkUrl) { (data, response, error) in

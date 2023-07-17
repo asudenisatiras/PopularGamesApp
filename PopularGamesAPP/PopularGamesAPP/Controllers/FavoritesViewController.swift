@@ -155,19 +155,32 @@ extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewData
 
         return cell
     }
+
 //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//           let game = favoriteGames[indexPath.item]
+//        let selectedGame = favoriteGames[indexPath.row]
+//        service.fetchGameDetails(with: Int(selectedGame.id)) { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let gameDetails):
+//                DispatchQueue.main.async {
+//                    let detailsViewController = DetailsViewController()
+//                    detailsViewController.gameName = selectedGame.name
+//                    detailsViewController.releasedDate = selectedGame.released
 //
-//           // Instantiate the DetailsViewController and set its properties based on the selected game.
-//           let detailsViewController = DetailsViewController()
-//           detailsViewController.gameName = game.name
-//           detailsViewController.releasedDate = game.released
+//                    detailsViewController.detailsL = gameDetails.description
+//                    detailsViewController.gameid = selectedGame.id
+//                    if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
+//                        detailsViewController.gameImage = UIImage(data: imageData)
+//                    }
+//                    detailsViewController.hidesBottomBarWhenPushed = true
 //
-//           // ... Set other properties as needed for the DetailsViewController.
-//
-//           // Push the DetailsViewController onto the navigation stack to navigate back to the details page.
-//           self.navigationController?.pushViewController(detailsViewController, animated: true)
-//       }
+//                    self.navigationController?.pushViewController(detailsViewController, animated: true)
+//                }
+//            case .failure(let error):
+//                print("FetchGameDetails Error: \(error)")
+//            }
+//        }
+//    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedGame = favoriteGames[indexPath.row]
         service.fetchGameDetails(with: Int(selectedGame.id)) { [weak self] result in
@@ -178,12 +191,15 @@ extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewData
                     let detailsViewController = DetailsViewController()
                     detailsViewController.gameName = selectedGame.name
                     detailsViewController.releasedDate = selectedGame.released
-                
+                 //   detailsViewController.metacriticR = "\(selectedGame.metacritic)"
                     detailsViewController.detailsL = gameDetails.description
                     detailsViewController.gameid = selectedGame.id
-                    if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
-                        detailsViewController.gameImage = UIImage(data: imageData)
+                    detailsViewController.metacriticRate.isHidden = true
+                    if let backgroundImageData = Data(base64Encoded: selectedGame.backgroundImage ?? ""),
+                       let backgroundImage = UIImage(data: backgroundImageData) {
+                        detailsViewController.gameImage = backgroundImage
                     }
+                    
                     detailsViewController.hidesBottomBarWhenPushed = true
                     
                     self.navigationController?.pushViewController(detailsViewController, animated: true)
@@ -193,6 +209,8 @@ extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewData
             }
         }
     }
+
+
 
 }
 

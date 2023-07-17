@@ -186,9 +186,15 @@ class DetailsViewController: UIViewController {
         super.viewDidLoad()
       setup()
       layout()
-        
+        updateFavoriteButton()
+
     }
- 
+    private func updateFavoriteButton() {
+          guard let gameid = gameid else { return }
+          let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
+          let favoriteBarButton = UIBarButtonItem(image: isFavorite ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
+          navigationItem.rightBarButtonItem = favoriteBarButton
+      }
 }
 extension DetailsViewController {
     private func setup(){
@@ -247,6 +253,34 @@ extension DetailsViewController {
         
     }
  
+//    @objc private func favoriteButtonTapped() {
+//        guard let gameName = gameName,
+//              let releasedDate = releasedDate,
+//              let metacriticRate = metacriticR,
+//              let gameid = gameid,
+//              let backgroundImage = imageView.image else {
+//            print("Favorite button: Missing required data")
+//            return
+//        }
+//
+//        let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
+//
+//        if isFavorite {
+//            // Remove the game from favorites
+//            CoreDataManager.shared.removeFavoriteGame(id: Int32(Int(gameid)))
+//
+//            let alert = UIAlertController(title: "Favorilerden Çıkarıldı", message: "Oyun favorilerden çıkarıldı.", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
+//            present(alert, animated: true, completion: nil)
+//        } else {
+//            // Add the game to favorites
+//            CoreDataManager.shared.saveGameData(name: gameName, released: releasedDate, backgroundImage: backgroundImage.pngData()?.base64EncodedString() ?? "", id: gameid)
+//
+//            let alert = UIAlertController(title: "Favorilere Eklendi", message: "Oyun favorilere eklendi.", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
+//            present(alert, animated: true, completion: nil)
+//        }
+//    }
     @objc private func favoriteButtonTapped() {
         guard let gameName = gameName,
               let releasedDate = releasedDate,
@@ -268,12 +302,19 @@ extension DetailsViewController {
             present(alert, animated: true, completion: nil)
         } else {
             // Add the game to favorites
-            CoreDataManager.shared.saveGameData(name: gameName, released: releasedDate, backgroundImage: backgroundImage.pngData()?.base64EncodedString() ?? "", id: gameid)
+            let backgroundImageData = backgroundImage.pngData()?.base64EncodedString() ?? ""
+                   CoreDataManager.shared.saveGameData(name: gameName, released: releasedDate, backgroundImage: backgroundImageData, id: gameid)
+//            CoreDataManager.shared.saveGameData(name: gameName, released: releasedDate, backgroundImage: backgroundImage.pngData()?.base64EncodedString() ?? "", id: gameid)
             
             let alert = UIAlertController(title: "Favorilere Eklendi", message: "Oyun favorilere eklendi.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         }
+        
+        // Update the favorite button's appearance based on whether the game is in favorites or not
+        let favoriteBarButton = UIBarButtonItem(image: isFavorite ? UIImage(systemName: "heart") : UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
+        navigationItem.rightBarButtonItem = favoriteBarButton
+        updateFavoriteButton()
     }
 
 }

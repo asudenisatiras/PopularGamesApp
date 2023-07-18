@@ -587,9 +587,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.backgroundColor = .systemGray4
 
         let games = viewModel.getGame(index: indexPath.row)//self.games[indexPath.row]
-         
-        
-        cell.configure(games: games)
+
+        let viewModel = GamesListCellViewModel(game: games)
+                cell.configure(with: viewModel)
          return cell
      }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

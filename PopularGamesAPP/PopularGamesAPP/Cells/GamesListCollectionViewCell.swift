@@ -112,9 +112,8 @@
 //
 
 import UIKit
-import GamesAPI
+//import GamesAPI
 class GamesListCollectionViewCell: UICollectionViewCell {
-    
     static let reuseIdentifier = "GamesListCollectionViewCell"
 
     public let gameImageView: UIImageView = {
@@ -176,14 +175,14 @@ extension GamesListCollectionViewCell{
         ratesLabel.translatesAutoresizingMaskIntoConstraints = false
         releasedDate.translatesAutoresizingMaskIntoConstraints = false
         gameNameLabel.translatesAutoresizingMaskIntoConstraints = false
-      //horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+
         layer.borderColor = UIColor.lightGray.cgColor
                 layer.borderWidth = 1.0
 
-                // Set corner radius for the cell
+                
                 layer.cornerRadius = 12
 
-                // Additional border style for the image view
+                
                 gameImageView.layer.borderColor = UIColor.gray.cgColor
                 gameImageView.layer.borderWidth = 1.0
     }
@@ -213,27 +212,16 @@ extension GamesListCollectionViewCell{
             fullStackView.leadingAnchor.constraint(equalTo: gameImageView.trailingAnchor, constant: 8)
         ])
     }
-    func artworkUrl(for games: Games) -> URL? {
-        if let artworkUrlString = games.backgroundImage, let artworkUrl = URL(string: artworkUrlString) {
-            return artworkUrl
-        }
-        return nil
-    }
+//    func artworkUrl(for games: Games) -> URL? {
+//        if let artworkUrlString = games.backgroundImage, let artworkUrl = URL(string: artworkUrlString) {
+//            return artworkUrl
+//        }
+//        return nil
+//    }
 
-     func configure(games: Games) {
-        gameNameLabel.text = games.name
-        ratesLabel.text = "Rating: \(String(format: "%.1f", games.rating ?? ""))"
-         releasedDate.text = "Release Date: \(games.released ?? "")"
-         if let artworkUrl = artworkUrl(for: games) {
-             URLSession.shared.dataTask(with: artworkUrl) { (data, response, error) in
-                 if let data = data {
-                     DispatchQueue.main.async {
-                         self.gameImageView.image = UIImage(data: data)
-                     }
-                 }
-             }.resume()
-         }
-     }
+    func configure(with viewModel: GamesListCellViewModelProtocol) {
+           viewModel.configure(cell: self)
+       }
 
 
 }

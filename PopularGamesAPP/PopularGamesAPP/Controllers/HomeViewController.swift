@@ -432,76 +432,38 @@
 //}
 //
 import UIKit
-import GamesAPI
-class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecognizerDelegate{
-    var allGames: [Games] = []
-    private let reuseIdentifier = "FavoriteCell"
+import GamesAPI // data models are defined in the API
+
+class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecognizerDelegate {
+    
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
     var pageControl: UIPageControl!
     var collectionView: UICollectionView!
-    var games: [Games] = []
-    let service = GamesService()
-    var currentPageIndex = 0
 
+    var viewModel: HomeViewModelProtocol! {
+        didSet {
+            viewModel.delegate = self
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         layout()
-        fetchGames()
+        viewModel.downloadGames(nil)
         setupp()
-
     }
-       
 
-    fileprivate func fetchGames() {
-        service.fetchGames() { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let games):
-                DispatchQueue.main.async {
-                    self.allGames = games
-                    let firstThreeGames = Array(games.prefix(3))
-                    self.pages = firstThreeGames.map { self.createPageViewController(with: $0) }
-                    self.pageControl.numberOfPages = self.pages.count
-
-                    if self.navigationItem.searchController?.searchBar.text?.isEmpty == true {
-                        self.games = Array(games.dropFirst(3))
-                    } else {
-                        self.performSearch()
-                    }
-
-                    self.collectionView.reloadData()
-                    self.pageViewController.setViewControllers([self.pages.first].compactMap { $0 }, direction: .forward, animated: true, completion: nil)
-                }
-            case .failure(let error):
-                print("FetchGames Error: \(error)")
-            }
-        }
-    }
-//    private func createPageViewController(with game: Games) -> UIViewController {
-//        let detailsViewController = DetailsViewController()
-//        detailsViewController.gameName = game.name
-//        detailsViewController.releasedDate = game.released
-//        detailsViewController.metacriticR = game.metacritic.map { String($0) }
-//        if let backgroundImageURLString = game.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
-//            detailsViewController.gameImage = UIImage(data: imageData)
-//
-//        }
-//        detailsViewController.imageView.contentMode = .scaleToFill
-//        return detailsViewController
-//    }
     private func createPageViewController(with game: Games) -> UIViewController {
         let newViewController = PageViewController()
-        // Set up your new view controller with the game data
-        // For example:
+        
         newViewController.gameName = game.name
-        //        newViewController.releasedDate = game.released
-//        newViewController.metacriticR = game.metacritic.map { String($0) }
+  
         if let backgroundImageURLString = game.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
             newViewController.gameImage = UIImage(data: imageData)
         }
-  //      newViewController.imageView.contentMode = .scaleToFill
+
         return newViewController
     }
 
@@ -547,7 +509,8 @@ extension HomeViewController {
           collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
           let flowLayout = UICollectionViewFlowLayout()
           flowLayout.scrollDirection = .vertical
-          collectionView.register(GamesListCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+          collectionView.register(GamesListCollectionViewCell.self,
+                                  forCellWithReuseIdentifier: GamesListCollectionViewCell.reuseIdentifier)
           collectionView.delegate = self
           collectionView.dataSource = self
           view.addSubview(collectionView)
@@ -602,28 +565,12 @@ extension HomeViewController: UIPageViewControllerDataSource, UIPageViewControll
 
 
     @objc private func pageViewControllerTapped(_ gestureRecognizer: UITapGestureRecognizer) {
-        if let currentViewController = pageViewController.viewControllers?.first as? DetailsViewController {
+        
+        if let currentViewController = pageViewController.viewControllers?.first as? PageViewController {
             if let currentIndex = pages.firstIndex(of: currentViewController) {
-                let selectedGame = games[currentIndex]
-                service.fetchGameDetails(with: Int(selectedGame.id!)) { [unowned self] result in
-                    switch result {
-                    case .success(let gameDetails):
-                        DispatchQueue.main.async {
-                            // currentViewController kullanarak mevcut DetailsViewController'ı güncelle
-                            currentViewController.gameName = selectedGame.name
-                            currentViewController.releasedDate = selectedGame.released
-                            currentViewController.metacriticR = selectedGame.metacritic.map { String($0) }
-                            currentViewController.detailsL = gameDetails.description
-                            if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
-                                currentViewController.gameImage = UIImage(data: imageData)
-                            }
-                            currentViewController.hidesBottomBarWhenPushed = true
-                            self.navigationController?.pushViewController(currentViewController, animated: true)
-                        }
-                    case .failure(let error):
-                        print("FetchGameDetails Error: \(error)")
-                    }
-                }
+                viewModel.fetchGameDetails(
+                    index: currentIndex - viewModel.pageViewControllerGameCount
+                )
             }
         }
     }
@@ -633,39 +580,20 @@ extension HomeViewController: UIPageViewControllerDataSource, UIPageViewControll
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource{
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         return games.count
+         return viewModel.gamesCount
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! GamesListCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GamesListCollectionViewCell.reuseIdentifier, for: indexPath) as! GamesListCollectionViewCell
         cell.backgroundColor = .systemGray4
 
-         let games = self.games[indexPath.row]
-         cell.configure(games: games)
+        let games = viewModel.getGame(index: indexPath.row)//self.games[indexPath.row]
+         
+        
+        cell.configure(games: games)
          return cell
      }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedGame = games[indexPath.row]
-        service.fetchGameDetails(with: Int(selectedGame.id!)) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let gameDetails):
-                DispatchQueue.main.async {
-                    let detailsViewController = DetailsViewController()
-                    detailsViewController.gameName = selectedGame.name
-                    detailsViewController.releasedDate = selectedGame.released
-                    detailsViewController.metacriticR = selectedGame.metacritic.map { String($0) }
-                    detailsViewController.detailsL = gameDetails.description
-                    detailsViewController.gameid = selectedGame.id
-                    if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
-                        detailsViewController.gameImage = UIImage(data: imageData)
-                    }
-                    detailsViewController.hidesBottomBarWhenPushed = true
-                    self.navigationController?.pushViewController(detailsViewController, animated: true)
-                }
-            case .failure(let error):
-                print("FetchGameDetails Error: \(error)")
-            }
-        }
+        viewModel.fetchGameDetails(index: indexPath.row)
     }
 
 }
@@ -692,39 +620,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout{
 extension HomeViewController {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch), object: nil)
-
-        if searchText.count >= 3 {
-            perform(#selector(performSearch), with: nil, afterDelay: 0.3)
-        } else {
-            fetchGames()
-        }
+        viewModel.fetchGames(searchText)
     }
-
-    @objc private func performSearch() {
-        guard let searchText = navigationItem.searchController?.searchBar.text else {
-            return
-        }
-
-        let filteredGames = allGames.filter { ($0.name ?? "").lowercased().contains(searchText.lowercased()) }
-        games = filteredGames // Oyunları filtrelenmiş sonuçlarla güncelle
-        collectionView.reloadData()
-    }
-
-    private func fetchGameDetailsForFirstResult() {
-        if let firstGame = games.first {
-            service.fetchGameDetails(with: Int(firstGame.id!)) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let videoGameDetails):
-                    self.printGameDetails(firstGame, videoGameDetails)
-                case .failure(let error):
-                    print("FetchGameDetails Error: \(error)")
-                }
-            }
-        }
-    }
-
+    
     private func printGameDetails(_ game: Games, _ videoGame: VideoGames) {
         print("Game ID: \(game.id)")
         print("Game Name: \(game.name)")
@@ -733,5 +631,36 @@ extension HomeViewController {
         print("Background Image URL: \(game.backgroundImage ?? "")")
         print("Description: \(videoGame.description ?? "")")
        
+    }
+}
+
+extension HomeViewController: HomeViewModelDelegate {
+    
+    func detailDownloadFinished(
+        selectedGame: Games,
+        gameDetails: VideoGames
+    ) {
+        DispatchQueue.main.async {
+            let detailsViewController = DetailsViewController()
+            detailsViewController.gameName = selectedGame.name
+            detailsViewController.releasedDate = selectedGame.released
+            detailsViewController.metacriticR = selectedGame.metacritic.map { String($0) }
+            detailsViewController.detailsL = gameDetails.description
+            detailsViewController.gameid = selectedGame.id
+            if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
+                detailsViewController.gameImage = UIImage(data: imageData)
+            }
+            detailsViewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(detailsViewController, animated: true)
+        }
+    }
+    
+    func gamesListDownloadFinished() {
+        let firstThreeGames = viewModel.getFirstThreeGames()
+        self.pages = firstThreeGames.map { self.createPageViewController(with: $0) }
+        self.pageControl.numberOfPages = self.pages.count
+        
+        collectionView.reloadData()
+        self.pageViewController.setViewControllers([self.pages.first].compactMap { $0 }, direction: .forward, animated: true, completion: nil)
     }
 }

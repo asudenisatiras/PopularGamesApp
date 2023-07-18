@@ -24,6 +24,7 @@
 		D365D6A22A60A2E90058E77B /* FavoritesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365D6A12A60A2E90058E77B /* FavoritesCollectionViewCell.swift */; };
 		D36E90F22A64820A00E528F7 /* CoreData+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E90F12A64820A00E528F7 /* CoreData+Helpers.swift */; };
 		D36E90F82A65D9AE00E528F7 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E90F72A65D9AE00E528F7 /* PageViewController.swift */; };
+		D36E91032A67360D00E528F7 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E91022A67360D00E528F7 /* HomeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		D365D6A12A60A2E90058E77B /* FavoritesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCollectionViewCell.swift; sourceTree = "<group>"; };
 		D36E90F12A64820A00E528F7 /* CoreData+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Helpers.swift"; sourceTree = "<group>"; };
 		D36E90F72A65D9AE00E528F7 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		D36E91022A67360D00E528F7 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 		D365D65C2A60A0B80058E77B /* PopularGamesAPP */ = {
 			isa = PBXGroup;
 			children = (
+				D36E91012A6735FC00E528F7 /* ViewModels */,
 				D36E90F02A6481F400E528F7 /* Helpers */,
 				D365D6962A60A1E10058E77B /* Files */,
 				D365D6952A60A1D80058E77B /* Cells */,
@@ -190,6 +193,14 @@
 				D36E90F12A64820A00E528F7 /* CoreData+Helpers.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D36E91012A6735FC00E528F7 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				D36E91022A67360D00E528F7 /* HomeViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,6 +343,7 @@
 				D365D6682A60A0B80058E77B /* PopularGamesAPP.xcdatamodeld in Sources */,
 				D36E90F22A64820A00E528F7 /* CoreData+Helpers.swift in Sources */,
 				D365D69C2A60A21A0058E77B /* DetailsViewController.swift in Sources */,
+				D36E91032A67360D00E528F7 /* HomeViewModel.swift in Sources */,
 				D365D65E2A60A0B80058E77B /* AppDelegate.swift in Sources */,
 				D365D6602A60A0B80058E77B /* SceneDelegate.swift in Sources */,
 				D365D6A22A60A2E90058E77B /* FavoritesCollectionViewCell.swift in Sources */,

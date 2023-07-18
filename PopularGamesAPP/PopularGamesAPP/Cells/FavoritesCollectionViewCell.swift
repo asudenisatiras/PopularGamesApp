@@ -62,6 +62,7 @@
 import UIKit
 
 class FavoritesCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "FavoritesCollectionViewCell"
     public let gameImageView: UIImageView = {
        let imageView = UIImageView()
         imageView.clipsToBounds = true

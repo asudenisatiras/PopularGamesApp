@@ -115,6 +115,7 @@ import UIKit
 import GamesAPI
 class GamesListCollectionViewCell: UICollectionViewCell {
     
+    static let reuseIdentifier = "GamesListCollectionViewCell"
 
     public let gameImageView: UIImageView = {
        let imageView = UIImageView()

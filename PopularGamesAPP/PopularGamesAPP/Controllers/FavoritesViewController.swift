@@ -10,7 +10,7 @@ import GamesAPI
 import UIKit
 import CoreData
 class FavoriteViewController: UIViewController {
-    private let reuseIdentifier = "FavoriteCell"
+   
      var collectionView: UICollectionView!
     var favoriteGames: [GamesCoreData] = []
     var games: [Games] = []
@@ -72,7 +72,7 @@ class FavoriteViewController: UIViewController {
 extension FavoriteViewController {
     private func setup(){
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.register(FavoritesCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(FavoritesCollectionViewCell.self, forCellWithReuseIdentifier: FavoritesCollectionViewCell.reuseIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
     }
@@ -92,7 +92,8 @@ extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewData
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FavoritesCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoritesCollectionViewCell.reuseIdentifier, for: indexPath) as! FavoritesCollectionViewCell
+
 
         let game = favoriteGames[indexPath.item]
         cell.configure(with: game)

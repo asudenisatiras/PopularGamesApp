@@ -17,8 +17,12 @@ class MainTabBarController : UITabBarController {
 }
 extension MainTabBarController {
     private func setup(){
+        
+        let homeViewController = HomeViewController()
+        homeViewController.viewModel = HomeViewModel()
+        
         viewControllers = [
-            createViewController(rootViewController: HomeViewController(),title: "Games", imageName: "gamecontroller.fill"),
+            createViewController(rootViewController: homeViewController,title: "Games", imageName: "gamecontroller.fill"),
             createViewController(rootViewController: FavoriteViewController(), title: "Favorites",imageName: "heart.fill")
         ]
         

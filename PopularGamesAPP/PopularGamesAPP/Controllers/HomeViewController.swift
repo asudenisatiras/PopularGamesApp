@@ -29,15 +29,31 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecogn
         setupp()
     }
 
+//    private func createPageViewController(with game: Games) -> UIViewController {
+//        let newViewController = PageViewController()
+//
+//        newViewController.gameName = game.name
+//
+//        if let backgroundImageURLString = game.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
+//            newViewController.gameImage = UIImage(data: imageData)
+//        }
+//
+//        return newViewController
+//    }
     private func createPageViewController(with game: Games) -> UIViewController {
         let newViewController = PageViewController()
-        
         newViewController.gameName = game.name
-  
-        if let backgroundImageURLString = game.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
-            newViewController.gameImage = UIImage(data: imageData)
+        
+        DispatchQueue.global().async {
+            if let backgroundImageURLString = game.backgroundImage,
+               let backgroundImageURL = URL(string: backgroundImageURLString),
+               let imageData = try? Data(contentsOf: backgroundImageURL) {
+                DispatchQueue.main.async {
+                    newViewController.gameImage = UIImage(data: imageData)
+                }
+            }
         }
-
+        
         return newViewController
     }
 
@@ -141,7 +157,7 @@ extension HomeViewController: UIPageViewControllerDataSource, UIPageViewControll
         if let currentViewController = pageViewController.viewControllers?.first as? PageViewController {
             if let currentIndex = pages.firstIndex(of: currentViewController) {
                 viewModel.fetchGameDetails(
-                    index: currentIndex - viewModel.pageViewControllerGameCount
+                    index: currentIndex, isPageControl: true
                 )
             }
         }
@@ -165,7 +181,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
          return cell
      }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.fetchGameDetails(index: indexPath.row)
+        viewModel.fetchGameDetails(index: indexPath.row, isPageControl: false)
     }
 
 }
@@ -195,19 +211,37 @@ extension HomeViewController {
         viewModel.fetchGames(searchText)
     }
     
-    private func printGameDetails(_ game: Games, _ videoGame: VideoGames) {
-        print("Game ID: \(game.id)")
-        print("Game Name: \(game.name)")
-        print("Released Date: \(game.released ?? "")")
-        print("Metacritic Score: \(game.metacritic ?? 0)")
-        print("Background Image URL: \(game.backgroundImage ?? "")")
-        print("Description: \(videoGame.description ?? "")")
-       
-    }
+//    private func printGameDetails(_ game: Games, _ videoGame: VideoGames) {
+//        print("Game ID: \(game.id)")
+//        print("Game Name: \(game.name)")
+//        print("Released Date: \(game.released ?? "")")
+//        print("Metacritic Score: \(game.metacritic ?? 0)")
+//        print("Background Image URL: \(game.backgroundImage ?? "")")
+//        print("Description: \(videoGame.description ?? "")")
+//
+//    }
 }
 
 extension HomeViewController: HomeViewModelDelegate {
     
+//    func detailDownloadFinished(
+//        selectedGame: Games,
+//        gameDetails: VideoGames
+//    ) {
+//        DispatchQueue.main.async {
+//            let detailsViewController = DetailsViewController()
+//            detailsViewController.gameName = selectedGame.name
+//            detailsViewController.releasedDate = selectedGame.released
+//            detailsViewController.metacriticR = selectedGame.metacritic.map { String($0) }
+//            detailsViewController.detailsL = gameDetails.description
+//            detailsViewController.gameid = selectedGame.id
+//            if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
+//                detailsViewController.gameImage = UIImage(data: imageData)
+//            }
+//            detailsViewController.hidesBottomBarWhenPushed = true
+//            self.navigationController?.pushViewController(detailsViewController, animated: true)
+//        }
+//    }
     func detailDownloadFinished(
         selectedGame: Games,
         gameDetails: VideoGames
@@ -219,14 +253,22 @@ extension HomeViewController: HomeViewModelDelegate {
             detailsViewController.metacriticR = selectedGame.metacritic.map { String($0) }
             detailsViewController.detailsL = gameDetails.description
             detailsViewController.gameid = selectedGame.id
-            if let backgroundImageURLString = selectedGame.backgroundImage, let backgroundImageURL = URL(string: backgroundImageURLString), let imageData = try? Data(contentsOf: backgroundImageURL) {
-                detailsViewController.gameImage = UIImage(data: imageData)
+
+           
+            DispatchQueue.global().async {
+                if let backgroundImageURLString = selectedGame.backgroundImage,
+                   let backgroundImageURL = URL(string: backgroundImageURLString),
+                   let imageData = try? Data(contentsOf: backgroundImageURL) {
+                    DispatchQueue.main.async {
+                        detailsViewController.gameImage = UIImage(data: imageData)
+                        detailsViewController.hidesBottomBarWhenPushed = true
+                        self.navigationController?.pushViewController(detailsViewController, animated: true)
+                    }
+                }
             }
-            detailsViewController.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(detailsViewController, animated: true)
         }
     }
-    
+
     func gamesListDownloadFinished() {
         let firstThreeGames = viewModel.getFirstThreeGames()
         self.pages = firstThreeGames.map { self.createPageViewController(with: $0) }

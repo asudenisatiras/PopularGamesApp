@@ -27,6 +27,7 @@
 		D36E91032A67360D00E528F7 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E91022A67360D00E528F7 /* HomeViewModel.swift */; };
 		D36E91092A673DD100E528F7 /* GameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E91082A673DD100E528F7 /* GameListViewModel.swift */; };
 		D36E910B2A674B5B00E528F7 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E910A2A674B5B00E528F7 /* FavoritesViewModel.swift */; };
+		D36E910D2A687B1700E528F7 /* EmptyFavoritesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E910C2A687B1700E528F7 /* EmptyFavoritesCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		D36E91022A67360D00E528F7 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		D36E91082A673DD100E528F7 /* GameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListViewModel.swift; sourceTree = "<group>"; };
 		D36E910A2A674B5B00E528F7 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		D36E910C2A687B1700E528F7 /* EmptyFavoritesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFavoritesCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 			children = (
 				D365D69F2A60A2A70058E77B /* GamesListCollectionViewCell.swift */,
 				D365D6A12A60A2E90058E77B /* FavoritesCollectionViewCell.swift */,
+				D36E910C2A687B1700E528F7 /* EmptyFavoritesCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 			files = (
 				D365D6982A60A1FA0058E77B /* HomeViewController.swift in Sources */,
 				D365D69E2A60A2280058E77B /* FavoritesViewController.swift in Sources */,
+				D36E910D2A687B1700E528F7 /* EmptyFavoritesCollectionViewCell.swift in Sources */,
 				D36E90F82A65D9AE00E528F7 /* PageViewController.swift in Sources */,
 				D365D69A2A60A20E0058E77B /* MainTabBarController.swift in Sources */,
 				D365D6682A60A0B80058E77B /* PopularGamesAPP.xcdatamodeld in Sources */,

@@ -18,7 +18,7 @@ protocol GamesListCellViewModelProtocol {
 }
 class GamesListCellViewModel: GamesListCellViewModelProtocol {
     private let game: Games
-
+    private var imageDownloadTask: URLSessionDataTask?
     init(game: Games) {
         self.game = game
     }
@@ -49,13 +49,15 @@ class GamesListCellViewModel: GamesListCellViewModelProtocol {
         cell.releasedDate.text = releaseDateText
 
         if let artworkUrl = artworkURL() {
-            URLSession.shared.dataTask(with: artworkUrl) { (data, response, error) in
+            imageDownloadTask?.cancel()
+            imageDownloadTask = URLSession.shared.dataTask(with: artworkUrl) { (data, response, error) in
                 if let data = data {
                     DispatchQueue.main.async {
                         cell.gameImageView.image = UIImage(data: data)
                     }
                 }
-            }.resume()
+            }
+            imageDownloadTask?.resume()
         }
     }
 }

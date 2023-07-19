@@ -32,7 +32,7 @@ protocol HomeViewModelProtocol: AnyObject {
     var delegate: HomeViewModelDelegate? { get set }
     
     func fetchGames(_ searchText: String?)
-    func fetchGameDetails(index: Int)
+    func fetchGameDetails(index: Int, isPageControl: Bool)
     func downloadGames(_ searchText: String?)
     func getFirstThreeGames() -> [Games]
     func getGame(index: Int) -> Games
@@ -41,6 +41,7 @@ protocol HomeViewModelProtocol: AnyObject {
 final class HomeViewModel: NSObject {
     var allGames: [Games] = []
     var games: [Games] = []
+    var pageControlGames : [Games] = []
     let service = GamesService()
     var currentPageIndex = 0
     
@@ -53,16 +54,26 @@ final class HomeViewModel: NSObject {
             return
         }
 
-        let filteredGames = allGames.filter { ($0.name ?? "").lowercased().contains(searchText.lowercased()) }
+        var filteredGames = allGames.filter {
+            if searchText.isEmpty {
+                return true
+            }
+            
+           return  ($0.name ?? "").lowercased().contains(searchText.lowercased())
+            
+        }
+        if searchText.isEmpty {
+            filteredGames = Array(filteredGames.dropFirst(3))
+        }
         games = filteredGames
-        //collectionView.reloadData()
+      
     }
 }
 
 extension HomeViewModel: HomeViewModelProtocol {
     
     var gamesCount: Int {
-        let count = games.count - Constants.pageControllerGameCount
+        let count = games.count
         let difference = abs(count)
         return (count >= 0) ? count : 0
     }
@@ -78,19 +89,19 @@ extension HomeViewModel: HomeViewModelProtocol {
     func fetchGames(
         _ searchText: String?
     ) {
-        //NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch), object: nil)
-
+     
         if (searchText?.count ?? 0) <= 3 {
-            //perform(#selector(performSearch), with: nil, afterDelay: 0.3)
+            
             performSearch(searchText)
+            delegate?.gamesListDownloadFinished()
         } else {
-            //fetchGames(searchText)
+           
             downloadGames(searchText)
         }
     }
     
-    func fetchGameDetails(index: Int) {
-        let selectedGame = getGame(index: index)
+    func fetchGameDetails(index: Int, isPageControl: Bool) {
+        let selectedGame = isPageControl ? pageControlGames[index] : getGame(index: index)
         service.fetchGameDetails(with: Int(selectedGame.id!)) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -116,9 +127,10 @@ extension HomeViewModel: HomeViewModelProtocol {
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
                     self.allGames = games
-
+                    
                     if searchText?.isEmpty ?? true {
-                        self.games = Array(games)
+                        self.pageControlGames = Array(games.prefix(3))
+                        self.games = Array(games.dropFirst(3))
                     } else {
                         self.performSearch(searchText)
                     }
@@ -132,6 +144,7 @@ extension HomeViewModel: HomeViewModelProtocol {
     }
     
     func getGame(index: Int) -> Games {
-        return games[index + Constants.pageControllerGameCount]
+        
+        return games[index]
     }
 }

@@ -25,18 +25,21 @@ extension MainTabBarController {
             createViewController(rootViewController: homeViewController,title: "Games", imageName: "gamecontroller.fill"),
             createViewController(rootViewController: FavoriteViewController(), title: "Favorites",imageName: "heart.fill")
         ]
-        
+       
     }
     
     private func createViewController(rootViewController: UIViewController,title:String, imageName: String) -> UINavigationController {
         rootViewController.title = title
         let appearance = UINavigationBarAppearance()
         appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = UIColor(red: 48/255, green: 41/255, blue: 57/255, alpha: 1.0)
+        
         let controller = UINavigationController(rootViewController: rootViewController)
         controller.navigationBar.compactAppearance = appearance
         controller.navigationBar.standardAppearance = appearance
         controller.navigationBar.scrollEdgeAppearance = appearance
         controller.navigationBar.compactScrollEdgeAppearance = appearance
+        controller.navigationBar.tintColor = .white
         controller.tabBarItem.title = title
         controller.tabBarItem.image = UIImage(systemName: imageName)
         return controller
@@ -46,24 +49,25 @@ extension MainTabBarController {
 
   private func customizeTabBar() {
 
-         tabBar.barTintColor = .white
-         tabBar.tintColor = .systemRed
+         tabBar.barTintColor = UIColor(red: 255/255, green: 127/255, blue: 80/255, alpha: 1.0)// Updated color
+         tabBar.tintColor = UIColor(red: 48/255, green: 41/255, blue: 57/255, alpha: 1.0)
          tabBar.layer.cornerRadius = 12
          tabBar.clipsToBounds = true
-         
-         
-         let backgroundView = UIView(frame: CGRect(x: 12, y: 0, width: tabBar.bounds.width - 24, height: tabBar.bounds.height))
-         backgroundView.backgroundColor = .systemGray5
-         backgroundView.layer.cornerRadius = 12
-         backgroundView.clipsToBounds = true
-         
-         
-         let separatorView = UIView(frame: CGRect(x: backgroundView.bounds.width / 2, y: 0, width: 1, height: backgroundView.bounds.height))
-         separatorView.backgroundColor = .separator
-         
-         
-         backgroundView.addSubview(separatorView)
-         
-         tabBar.insertSubview(backgroundView, at: 0)
+//
+//
+//         let backgroundView = UIView(frame: CGRect(x: 12, y: 0, width: tabBar.bounds.width - 24, height: tabBar.bounds.height))
+//         backgroundView.backgroundColor = .systemGray5
+//         backgroundView.layer.cornerRadius = 12
+//         backgroundView.clipsToBounds = true
+//
+//
+         let separatorView = UIView(frame: CGRect(x: tabBar.bounds.width / 2, y: 0, width: 1, height: tabBar.bounds.height))
+         separatorView.backgroundColor = UIColor(red: 48/255, green: 41/255, blue: 57/255, alpha: 1.0)
+//
+//
+         tabBar.insertSubview(separatorView, at: 0)
+//
+//         tabBar.insertSubview(backgroundView, at: 0)
       }
   }
+

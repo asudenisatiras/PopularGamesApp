@@ -53,7 +53,7 @@ class PageViewController: UIViewController{
                       gamesImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
                       gamesImage.widthAnchor.constraint(equalToConstant: 100), // Set the desired width
                       gamesImage.heightAnchor.constraint(equalToConstant: 200),
-                      gamesImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                      gamesImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
                       gamesImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),// Set the desired height
                       nameOfGameLabel.topAnchor.constraint(equalTo: gamesImage.bottomAnchor, constant: -32), // Place label below the image view with 16 points spacing
                                   nameOfGameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),

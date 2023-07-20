@@ -20,14 +20,14 @@ class FavoritesCollectionViewCell: UICollectionViewCell {
        let label = UILabel()
         label.text = "Game Name"
         label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.textColor = .black
+        label.textColor = .white
         return label
     }()
     public let ratesLabel: UILabel = {
        let label = UILabel()
         label.text = "Game Rate"
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .white
         return label
     }()
     

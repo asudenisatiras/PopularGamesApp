@@ -54,10 +54,11 @@ extension FavoriteViewController: FavoriteViewModelDelegate {
 
 extension FavoriteViewController {
     private func setup(){
+       
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.register(FavoritesCollectionViewCell.self, forCellWithReuseIdentifier: FavoritesCollectionViewCell.reuseIdentifier)
         collectionView.register(EmptyFavoritesCollectionViewCell.self, forCellWithReuseIdentifier: "NoFavoritesCell")
-
+        collectionView.backgroundColor = UIColor(red: 11/255, green: 4/255, blue: 22/255, alpha: 1.0)
         collectionView.delegate = self
         collectionView.dataSource = self
     }

@@ -41,21 +41,21 @@ class DetailsViewController: UIViewController {
         let label = UILabel()
         label.text = "Name of Game"
         label.font = UIFont.boldSystemFont(ofSize: 30)
-        label.textColor = .label
+        label.textColor = .white
         return label
     }()
     public var releaseDate: UILabel = {
         let label = UILabel()
         label.text = "Release Date"
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .label
+        label.textColor = .white
         return label
     }()
     public var metacriticRate: UILabel = {
         let label = UILabel()
         label.text = "Metacritic Rate"
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .label
+        label.textColor = .white
         return label
     }()
     public var descriptionLabel : UILabel = {
@@ -63,13 +63,14 @@ class DetailsViewController: UIViewController {
         label.text = "Description"
 
         label.font = UIFont.boldSystemFont(ofSize: 10)
-        label.textColor = .label
+        label.textColor = .white
         label.numberOfLines = 0
         return label
     }()
     public var favoriteButton: UIButton = {
         let button = UIButton()
         button.imageView?.image = UIImage(systemName: "heart")
+        
         return button
     }()
     
@@ -155,7 +156,7 @@ class DetailsViewController: UIViewController {
 }
 extension DetailsViewController {
     private func setup(){
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 11/255, green: 4/255, blue: 22/255, alpha: 1.0)
      
         imageView.layer.cornerRadius = 12
      

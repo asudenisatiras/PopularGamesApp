@@ -29,7 +29,7 @@ class GamesListCellViewModel: GamesListCellViewModelProtocol {
     }
 
     var ratingText: String {
-        return "Rating: \(String(format: "%.1f", game.rating ?? 0.0))"
+        return "\(String(format: "%.1f", game.rating ?? 0.0))"
     }
 
     var releaseDateText: String {

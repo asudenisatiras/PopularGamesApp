@@ -5,7 +5,6 @@
 //  Created by Asude Nisa Tıraş on 19.07.2023.
 //
 
-
 import Foundation
 import GamesAPI
 
@@ -24,13 +23,14 @@ protocol HomeViewModelDelegate: AnyObject {
 }
 
 protocol HomeViewModelProtocol: AnyObject {
-    
+
     var gamesCount: Int { get }
-    var games: [Games] { get set } 
+    var games: [Games] { get set }
     var pageViewControllerGameCount: Int { get }
-    
+    var isHeaderHidden: Bool { get }
+
     var delegate: HomeViewModelDelegate? { get set }
-    
+
     func fetchGames(_ searchText: String?)
     func fetchGameDetails(index: Int, isPageControl: Bool)
     func downloadGames(_ searchText: String?)
@@ -44,9 +44,10 @@ final class HomeViewModel: NSObject {
     var pageControlGames : [Games] = []
     let service = GamesService()
     var currentPageIndex = 0
-    
+    var isHeaderHidden: Bool = true
+
     weak var delegate: HomeViewModelDelegate?
-    
+
     @objc private func performSearch(
         _ searchText: String?
     ) {
@@ -58,15 +59,15 @@ final class HomeViewModel: NSObject {
             if searchText.isEmpty {
                 return true
             }
-            
+
            return  ($0.name ?? "").lowercased().contains(searchText.lowercased())
-            
+
         }
         if searchText.isEmpty {
             filteredGames = Array(filteredGames.dropFirst(3))
         }
         games = filteredGames
-      
+
     }
 }
 
@@ -77,29 +78,40 @@ extension HomeViewModel: HomeViewModelProtocol {
         let difference = abs(count)
         return (count >= 0) ? count : 0
     }
-    
+
     var pageViewControllerGameCount: Int {
         Constants.pageControllerGameCount
     }
-    
+
     func getFirstThreeGames() -> [Games] {
         return Array(allGames.prefix(3))
     }
-    
+
     func fetchGames(
         _ searchText: String?
     ) {
-     
-        if (searchText?.count ?? 0) <= 3 {
-            
+        
+        let count = (searchText?.count ?? 0)
+        
+        if count == 0 {
+            isHeaderHidden = false
+            downloadGames(nil)
+        }
+        else if count < 3 {
+            isHeaderHidden = false
+            performSearch(nil)
+            delegate?.gamesListDownloadFinished()
+        }
+        else if count == 3 {
+            isHeaderHidden = true
             performSearch(searchText)
             delegate?.gamesListDownloadFinished()
         } else {
-           
+            isHeaderHidden = true
             downloadGames(searchText)
         }
     }
-    
+
     func fetchGameDetails(index: Int, isPageControl: Bool) {
         let selectedGame = isPageControl ? pageControlGames[index] : getGame(index: index)
         service.fetchGameDetails(with: Int(selectedGame.id!)) { [weak self] result in
@@ -110,13 +122,13 @@ extension HomeViewModel: HomeViewModelProtocol {
                     selectedGame: selectedGame,
                     gameDetails: gameDetails
                 )
-                
+
             case .failure(let error):
                 print("FetchGameDetails Error: \(error)")
             }
         }
     }
-    
+
     func downloadGames(
         _ searchText: String?
     ) {
@@ -127,14 +139,14 @@ extension HomeViewModel: HomeViewModelProtocol {
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
                     self.allGames = games
-                    
+
                     if searchText?.isEmpty ?? true {
                         self.pageControlGames = Array(games.prefix(3))
                         self.games = Array(games.dropFirst(3))
                     } else {
                         self.performSearch(searchText)
                     }
-                    
+
                     delegate?.gamesListDownloadFinished()
                 }
             case .failure(let error):
@@ -142,9 +154,10 @@ extension HomeViewModel: HomeViewModelProtocol {
             }
         }
     }
-    
+
     func getGame(index: Int) -> Games {
-        
+
         return games[index]
     }
 }
+

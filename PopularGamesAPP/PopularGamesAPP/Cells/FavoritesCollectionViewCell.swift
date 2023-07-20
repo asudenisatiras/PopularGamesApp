@@ -65,12 +65,12 @@ extension FavoritesCollectionViewCell{
             if let image = UIImage(data: imageData) {
                 gameImageView.image = image
             } else {
-                // Set a default placeholder image in case the data cannot be converted to UIImage.
-                gameImageView.image = UIImage(named: "placeholderImage")
+                
+                gameImageView.image = UIImage(named: "loading")
             }
         } else {
-            // Set a default placeholder image in case the imageData is nil or cannot be converted to Data.
-            gameImageView.image = UIImage(named: "placeholderImage")
+           
+            gameImageView.image = UIImage(named: "loading")
         }
 
         gameNameLabel.text = game.name

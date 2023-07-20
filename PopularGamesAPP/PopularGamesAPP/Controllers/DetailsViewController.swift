@@ -41,21 +41,21 @@ class DetailsViewController: UIViewController {
         let label = UILabel()
         label.text = "Name of Game"
         label.font = UIFont.boldSystemFont(ofSize: 30)
-        label.textColor = .black
+        label.textColor = .label
         return label
     }()
     public var releaseDate: UILabel = {
         let label = UILabel()
         label.text = "Release Date"
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .black
+        label.textColor = .label
         return label
     }()
     public var metacriticRate: UILabel = {
         let label = UILabel()
         label.text = "Metacritic Rate"
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .label
         return label
     }()
     public var descriptionLabel : UILabel = {
@@ -63,7 +63,7 @@ class DetailsViewController: UIViewController {
         label.text = "Description"
 
         label.font = UIFont.boldSystemFont(ofSize: 10)
-        label.textColor = .black
+        label.textColor = .label
         label.numberOfLines = 0
         return label
     }()

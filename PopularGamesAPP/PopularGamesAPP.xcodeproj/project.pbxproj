@@ -28,6 +28,7 @@
 		D36E91092A673DD100E528F7 /* GameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E91082A673DD100E528F7 /* GameListViewModel.swift */; };
 		D36E910B2A674B5B00E528F7 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E910A2A674B5B00E528F7 /* FavoritesViewModel.swift */; };
 		D36E910D2A687B1700E528F7 /* EmptyFavoritesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E910C2A687B1700E528F7 /* EmptyFavoritesCollectionViewCell.swift */; };
+		D36E910F2A688F2A00E528F7 /* PageControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E910E2A688F2A00E528F7 /* PageControllerViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		D36E91082A673DD100E528F7 /* GameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListViewModel.swift; sourceTree = "<group>"; };
 		D36E910A2A674B5B00E528F7 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		D36E910C2A687B1700E528F7 /* EmptyFavoritesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFavoritesCollectionViewCell.swift; sourceTree = "<group>"; };
+		D36E910E2A688F2A00E528F7 /* PageControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControllerViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +210,7 @@
 				D36E91022A67360D00E528F7 /* HomeViewModel.swift */,
 				D36E91082A673DD100E528F7 /* GameListViewModel.swift */,
 				D36E910A2A674B5B00E528F7 /* FavoritesViewModel.swift */,
+				D36E910E2A688F2A00E528F7 /* PageControllerViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				D36E910D2A687B1700E528F7 /* EmptyFavoritesCollectionViewCell.swift in Sources */,
 				D36E90F82A65D9AE00E528F7 /* PageViewController.swift in Sources */,
 				D365D69A2A60A20E0058E77B /* MainTabBarController.swift in Sources */,
+				D36E910F2A688F2A00E528F7 /* PageControllerViewModel.swift in Sources */,
 				D365D6682A60A0B80058E77B /* PopularGamesAPP.xcdatamodeld in Sources */,
 				D36E91092A673DD100E528F7 /* GameListViewModel.swift in Sources */,
 				D36E90F22A64820A00E528F7 /* CoreData+Helpers.swift in Sources */,

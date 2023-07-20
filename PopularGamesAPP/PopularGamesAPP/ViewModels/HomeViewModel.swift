@@ -26,7 +26,7 @@ protocol HomeViewModelDelegate: AnyObject {
 protocol HomeViewModelProtocol: AnyObject {
     
     var gamesCount: Int { get }
-    
+    var games: [Games] { get set } 
     var pageViewControllerGameCount: Int { get }
     
     var delegate: HomeViewModelDelegate? { get set }

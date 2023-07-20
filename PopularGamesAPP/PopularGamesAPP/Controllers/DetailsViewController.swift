@@ -86,7 +86,7 @@ class DetailsViewController: UIViewController {
            private func updateFavoriteButton() {
                  guard let gameid = gameid else { return }
                  let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
-                 let favoriteBarButton = UIBarButtonItem(image: isFavorite ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
+               let favoriteBarButton = UIBarButtonItem(image: isFavorite ? UIImage(systemName: "heart.fill") : UIImage(systemName:  "heart"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
                  navigationItem.rightBarButtonItem = favoriteBarButton
              }
        

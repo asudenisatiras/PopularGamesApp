@@ -10,7 +10,7 @@ import UIKit
 class EmptyFavoritesCollectionViewCell: UICollectionViewCell {
     
         private let imageView: UIImageView = {
-            let imageView = UIImageView(image: UIImage(named: "emptyView"))
+            let imageView = UIImageView(image: UIImage(named: "addFav"))
             imageView.contentMode = .scaleAspectFit
             return imageView
         }()
@@ -22,9 +22,10 @@ class EmptyFavoritesCollectionViewCell: UICollectionViewCell {
             NSLayoutConstraint.activate([
                 imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant:  200),
                 imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                imageView.widthAnchor.constraint(equalToConstant: 500),
-                imageView.heightAnchor.constraint(equalToConstant: 450),
+                imageView.widthAnchor.constraint(equalToConstant: 300),
+                imageView.heightAnchor.constraint(equalToConstant: 250),
                 imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 100)
+               
                 
             ])
 

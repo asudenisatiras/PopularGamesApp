@@ -322,7 +322,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecogn
         viewModel.downloadGames(nil)
         setupp()
     }
-
+   
     private func createPageViewController(with viewModel: PageViewModel) -> UIViewController {
            let newViewController = PageViewController()
            newViewController.gameName = viewModel.gameName
@@ -338,6 +338,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecogn
 
            return newViewController
        }
+
 }
 
 extension HomeViewController {
@@ -374,7 +375,7 @@ extension HomeViewController {
         
         collectionView.backgroundColor = UIColor(red: 11/255, green: 4/255, blue: 22/255, alpha: 1.0)
 
-
+       
         view.addSubview(homeStackView)
         homeStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -504,14 +505,16 @@ extension HomeViewController {
         }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         isSearchActive = !searchText.isEmpty
-        
+
         viewModel.fetchGames(searchText)
         pageViewController.view.isHidden = viewModel.isHeaderHidden
         pageControl.isHidden = viewModel.isHeaderHidden
-        
+
         pageViewController.setViewControllers([pages.first].compactMap { $0 }, direction: .forward, animated: false, completion: nil)
-    
+
                   }
+   
+
       }
    
         

@@ -36,6 +36,9 @@
 		D36E911E2A6B3A7F00E528F7 /* MockFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E911D2A6B3A7F00E528F7 /* MockFavoritesViewController.swift */; };
 		D36E91202A6B3A8D00E528F7 /* MockFavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E911F2A6B3A8D00E528F7 /* MockFavoritesViewModel.swift */; };
 		D36E91252A6B408400E528F7 /* HomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E91242A6B408400E528F7 /* HomeTests.swift */; };
+		D37839262A6BE9A400D0003F /* AlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37839252A6BE9A400D0003F /* AlertExtension.swift */; };
+		D3B0FE422A6C22B60080F0E4 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0FE412A6C22B60080F0E4 /* SplashViewController.swift */; };
+		D3B0FE442A6C22C20080F0E4 /* Reachabilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0FE432A6C22C20080F0E4 /* Reachabilty.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +92,9 @@
 		D36E911D2A6B3A7F00E528F7 /* MockFavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFavoritesViewController.swift; sourceTree = "<group>"; };
 		D36E911F2A6B3A8D00E528F7 /* MockFavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFavoritesViewModel.swift; sourceTree = "<group>"; };
 		D36E91242A6B408400E528F7 /* HomeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTests.swift; sourceTree = "<group>"; };
+		D37839252A6BE9A400D0003F /* AlertExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExtension.swift; sourceTree = "<group>"; };
+		D3B0FE412A6C22B60080F0E4 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		D3B0FE432A6C22C20080F0E4 /* Reachabilty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachabilty.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +148,7 @@
 		D365D65C2A60A0B80058E77B /* PopularGamesAPP */ = {
 			isa = PBXGroup;
 			children = (
+				D3B0FE402A6C229D0080F0E4 /* SplashScreen */,
 				D36E91012A6735FC00E528F7 /* ViewModels */,
 				D36E90F02A6481F400E528F7 /* Helpers */,
 				D365D6962A60A1E10058E77B /* Files */,
@@ -215,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				D36E90F12A64820A00E528F7 /* CoreData+Helpers.swift */,
+				D37839252A6BE9A400D0003F /* AlertExtension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -250,6 +258,15 @@
 				D36E91242A6B408400E528F7 /* HomeTests.swift */,
 			);
 			path = MockHomeView;
+			sourceTree = "<group>";
+		};
+		D3B0FE402A6C229D0080F0E4 /* SplashScreen */ = {
+			isa = PBXGroup;
+			children = (
+				D3B0FE412A6C22B60080F0E4 /* SplashViewController.swift */,
+				D3B0FE432A6C22C20080F0E4 /* Reachabilty.swift */,
+			);
+			path = SplashScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -388,11 +405,14 @@
 				D365D6982A60A1FA0058E77B /* HomeViewController.swift in Sources */,
 				D365D69E2A60A2280058E77B /* FavoritesViewController.swift in Sources */,
 				D36E910D2A687B1700E528F7 /* EmptyFavoritesCollectionViewCell.swift in Sources */,
+				D3B0FE442A6C22C20080F0E4 /* Reachabilty.swift in Sources */,
+				D3B0FE422A6C22B60080F0E4 /* SplashViewController.swift in Sources */,
 				D36E90F82A65D9AE00E528F7 /* PageViewController.swift in Sources */,
 				D365D69A2A60A20E0058E77B /* MainTabBarController.swift in Sources */,
 				D36E910F2A688F2A00E528F7 /* PageControllerViewModel.swift in Sources */,
 				D365D6682A60A0B80058E77B /* PopularGamesAPP.xcdatamodeld in Sources */,
 				D36E91092A673DD100E528F7 /* GameListViewModel.swift in Sources */,
+				D37839262A6BE9A400D0003F /* AlertExtension.swift in Sources */,
 				D36E90F22A64820A00E528F7 /* CoreData+Helpers.swift in Sources */,
 				D365D69C2A60A21A0058E77B /* DetailsViewController.swift in Sources */,
 				D36E910B2A674B5B00E528F7 /* FavoritesViewModel.swift in Sources */,

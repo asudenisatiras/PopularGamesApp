@@ -47,14 +47,14 @@ class DetailsViewController: UIViewController {
     public var releaseDate: UILabel = {
         let label = UILabel()
         label.text = "Release Date"
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .white
         return label
     }()
     public var metacriticRate: UILabel = {
         let label = UILabel()
         label.text = "Metacritic Rate"
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .white
         return label
     }()
@@ -62,7 +62,7 @@ class DetailsViewController: UIViewController {
         let label = UILabel()
         label.text = "Description"
 
-        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = .white
         label.numberOfLines = 0
         return label
@@ -174,8 +174,10 @@ extension DetailsViewController {
             imageView.image = gameImage
         }
         if let details = detailsL {
-            descriptionLabel.text = details
+            let cleanDescription = removeHTMLTags(from: details)
+            descriptionLabel.text = cleanDescription
         }
+
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
@@ -213,40 +215,108 @@ extension DetailsViewController {
         
     }
  
-        @objc private func favoriteButtonTapped() {
-            guard let gameName = gameName,
-                  let releasedDate = releasedDate,
-                  let metacriticRate = metacriticR,
-                  let gameid = gameid,
-                  let backgroundImage = imageView.image else {
-                print("Favorite button: Missing required data")
-                return
-            }
-    
-            let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
-    
-            if isFavorite {
-                
-                CoreDataManager.shared.removeFavoriteGame(id: Int32(Int(gameid)))
-    
-                let alert = UIAlertController(title: "Favorilerden Çıkarıldı", message: "Oyun favorilerden çıkarıldı.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
-                present(alert, animated: true, completion: nil)
-            } else {
-              
-                let backgroundImageData = backgroundImage.pngData()?.base64EncodedString() ?? ""
-                       CoreDataManager.shared.saveGameData(name: gameName, released: releasedDate, backgroundImage: backgroundImageData, id: gameid)
-    
-    
-                let alert = UIAlertController(title: "Favorilere Eklendi", message: "Oyun favorilere eklendi.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
-                present(alert, animated: true, completion: nil)
-            }
-    
-           
-            let favoriteBarButton = UIBarButtonItem(image: isFavorite ? UIImage(systemName: "heart") : UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
-            navigationItem.rightBarButtonItem = favoriteBarButton
-            updateFavoriteButton()
+//        @objc private func favoriteButtonTapped() {
+//            guard let gameName = gameName,
+//                  let releasedDate = releasedDate,
+//                  let metacriticRate = metacriticR,
+//                  let gameid = gameid,
+//                  let backgroundImage = imageView.image else {
+//                print("Favorite button: Missing required data")
+//                return
+//            }
+//
+//            let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
+//
+//            if isFavorite {
+//
+//                CoreDataManager.shared.removeFavoriteGame(id: Int32(Int(gameid)))
+//
+//                let alert = UIAlertController(title: "Favorilerden Çıkarıldı", message: "Oyun favorilerden çıkarıldı.", preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
+//                present(alert, animated: true, completion: nil)
+//            } else {
+//
+//                let backgroundImageData = backgroundImage.pngData()?.base64EncodedString() ?? ""
+//                       CoreDataManager.shared.saveGameData(name: gameName, released: releasedDate, backgroundImage: backgroundImageData, id: gameid)
+//
+//
+//                let alert = UIAlertController(title: "Favorilere Eklendi", message: "Oyun favorilere eklendi.", preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
+//                present(alert, animated: true, completion: nil)
+//            }
+//
+//
+//            let favoriteBarButton = UIBarButtonItem(image: isFavorite ? UIImage(systemName: "heart") : UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
+//            navigationItem.rightBarButtonItem = favoriteBarButton
+//            updateFavoriteButton()
+//        }
+    @objc private func favoriteButtonTapped() {
+        guard let gameName = gameName,
+              let releasedDate = releasedDate,
+              let metacriticRate = metacriticR,
+              let gameid = gameid,
+              let backgroundImage = imageView.image else {
+            print("Favorite button: Missing required data")
+            return
         }
+
+        let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
+
+        if isFavorite {
+            CoreDataManager.shared.removeFavoriteGame(id: Int32(Int(gameid)))
+            // Alt bildirim göstermek için presentBottomAlert fonksiyonunu çağırma
+            self.presentBottomAlert(
+                title: "Favorite Updates",
+                message: "Do you want this game to be removed from the favorites?",
+                okTitle: "Yes",
+                cancelTitle: "Cancel",
+                okAction: {
+                    // "Tamam" düğmesine basıldığında yapılacak işlemler
+                    let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(self.favoriteButtonTapped))
+                    self.navigationItem.rightBarButtonItem = favoriteBarButton
+                    self.updateFavoriteButton()
+                }
+            )
+        } else {
+            let backgroundImageData = backgroundImage.pngData()?.base64EncodedString() ?? ""
+            CoreDataManager.shared.saveGameData(name: gameName, released: releasedDate, backgroundImage: backgroundImageData, id: gameid)
+            self.presentBottomAlert(
+                title: "Favorite Updates",
+                message: "Do you want this game to be added to your favorites?",
+                okTitle: "Yes",
+                cancelTitle: "Cancel",
+                okAction: {
+                    // "Tamam" düğmesine basıldığında yapılacak işlemler
+                    let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(self.favoriteButtonTapped))
+                    self.navigationItem.rightBarButtonItem = favoriteBarButton
+                    self.updateFavoriteButton()
+                }
+            )
+        }
+    }
+
+}
+extension DetailsViewController {
+    
+    func presentBottomAlert(title: String, message: String, okTitle: String, cancelTitle: String, okAction: @escaping () -> Void) {
+        let alert = UIAlertController(title: NSLocalizedString(title, comment: ""), message: NSLocalizedString(message, comment: ""), preferredStyle: .actionSheet)
+        
+        let okAction = UIAlertAction(title: NSLocalizedString(okTitle, comment: ""), style: .default) { _ in
+            okAction()
+        }
+        
+        let cancelAction = UIAlertAction(title: NSLocalizedString(cancelTitle, comment: ""), style: .destructive, handler: nil)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    func removeHTMLTags(from text: String) -> String {
+        let regex = try! NSRegularExpression(pattern: "<.*?>", options: [])
+        let range = NSMakeRange(0, text.utf16.count)
+        let htmlLessString = regex.stringByReplacingMatches(in: text, options: [], range: range, withTemplate: "")
+        return htmlLessString
+    }
 
 }

@@ -512,9 +512,18 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout{
 }
 
 extension HomeViewController {
+//    private func updateNoDataLabelVisibility() {
+//        noDataLabel.isHidden = viewModel.gamesCount >= 3 && !isSearchActive
+//    }
     private func updateNoDataLabelVisibility() {
-        noDataLabel.isHidden = viewModel.gamesCount >= 3 || !isSearchActive
-    }
+           if isSearchActive && viewModel.gamesCount == 0 {
+               noDataLabel.isHidden = false
+           } else if !isSearchActive && viewModel.gamesCount >= 3 {
+               noDataLabel.isHidden = true
+           } else {
+               noDataLabel.isHidden = true
+           }
+       }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
     }
@@ -548,8 +557,12 @@ extension HomeViewController: HomeViewModelDelegate {
         DispatchQueue.main.async {
             let detailsViewController = DetailsViewController()
             detailsViewController.gameName = selectedGame.name
-            detailsViewController.releasedDate = selectedGame.released
-            detailsViewController.metacriticR = "Metacritic Rate: \(String(describing: selectedGame.metacritic.map { String($0) }))"
+            detailsViewController.releasedDate = "Released Date: \(selectedGame.released ?? "")"
+            if let metacritic = selectedGame.metacritic {
+                detailsViewController.metacriticR = "Metacritic Rate: \(metacritic)"
+            } else {
+                detailsViewController.metacriticR = "Metacritic Rate: N/A"
+            }
             detailsViewController.detailsL = gameDetails.description
             detailsViewController.gameid = selectedGame.id
             
@@ -584,3 +597,4 @@ extension HomeViewController: HomeViewModelDelegate {
     }
     
 }
+

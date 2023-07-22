@@ -323,7 +323,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecogn
         viewModel.downloadGames(nil)
         setupp()
     }
-   
+
     private func createPageViewController(with viewModel: PageViewModel) -> UIViewController {
            let newViewController = PageViewController()
            newViewController.gameName = viewModel.gameName

@@ -6,33 +6,38 @@
 //
 
 import Foundation
-import UIKit
 import GamesAPI
 
 protocol GamesListCellViewModelProtocol {
-    var gameName: String { get }
-    var ratingText: String { get }
-    var releaseDateText: String { get }
-    func artworkURL() -> URL?
-    func configure(cell: GamesListCollectionViewCell)
+    var gameName: String? { get }
+    var ratingText: String? { get }
+    var releaseDateText: String? { get }
+    func downloadImage()
+    var delegate: GamesListCellViewModelDelegate? { get set }
+        
+}
+protocol GamesListCellViewModelDelegate : AnyObject {
+    func imageDidDownload(_ data: Data)
 }
 class GamesListCellViewModel: GamesListCellViewModelProtocol {
     private let game: Games
     private var imageDownloadTask: URLSessionDataTask?
+    weak var delegate : GamesListCellViewModelDelegate?
+    
     init(game: Games) {
         self.game = game
     }
 
     // Computed properties to expose relevant information from the Games object
-    var gameName: String {
-        return game.name!
+    var gameName: String? {
+        return game.name
     }
 
-    var ratingText: String {
+    var ratingText: String? {
         return "\(String(format: "%.1f", game.rating ?? 0.0))"
     }
 
-    var releaseDateText: String {
+    var releaseDateText: String? {
         return "Release Date: \(game.released ?? "")"
     }
 
@@ -43,18 +48,15 @@ class GamesListCellViewModel: GamesListCellViewModelProtocol {
         return nil
     }
 
-    func configure(cell: GamesListCollectionViewCell) {
-        cell.gameNameLabel.text = gameName
-        cell.ratesLabel.text = ratingText
-        cell.releasedDate.text = releaseDateText
+    func downloadImage() {
+
 
         if let artworkUrl = artworkURL() {
             imageDownloadTask?.cancel()
-            imageDownloadTask = URLSession.shared.dataTask(with: artworkUrl) { (data, response, error) in
+            imageDownloadTask = URLSession.shared.dataTask(with: artworkUrl) { [weak self] (data, response, error) in
                 if let data = data {
-                    DispatchQueue.main.async {
-                        cell.gameImageView.image = UIImage(data: data)
-                    }
+                    self?.delegate?.imageDidDownload(data)
+                    
                 }
             }
             imageDownloadTask?.resume()

@@ -16,10 +16,7 @@ extension HomeViewModel {
 
 protocol HomeViewModelDelegate: AnyObject {
     func gamesListDownloadFinished()
-    func detailDownloadFinished(
-        selectedGame: Games,
-        gameDetails: VideoGames
-    )
+    
 }
 
 protocol HomeViewModelProtocol: AnyObject {
@@ -32,10 +29,10 @@ protocol HomeViewModelProtocol: AnyObject {
     var delegate: HomeViewModelDelegate? { get set }
 
     func fetchGames(_ searchText: String?)
-    func fetchGameDetails(index: Int, isPageControl: Bool)
+    
     func downloadGames(_ searchText: String?)
     func getFirstThreeGames() -> [Games]
-    func getGame(index: Int) -> Games
+    func getGame(index: Int,pageController: Bool) -> Games
 }
 
 final class HomeViewModel: NSObject {
@@ -112,22 +109,7 @@ extension HomeViewModel: HomeViewModelProtocol {
         }
     }
 
-    func fetchGameDetails(index: Int, isPageControl: Bool) {
-        let selectedGame = isPageControl ? pageControlGames[index] : getGame(index: index)
-        service.fetchGameDetails(with: Int(selectedGame.id!)) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let gameDetails):
-                delegate?.detailDownloadFinished(
-                    selectedGame: selectedGame,
-                    gameDetails: gameDetails
-                )
-
-            case .failure(let error):
-                print("FetchGameDetails Error: \(error)")
-            }
-        }
-    }
+   
 
     func downloadGames(
         _ searchText: String?
@@ -155,9 +137,9 @@ extension HomeViewModel: HomeViewModelProtocol {
         }
     }
 
-    func getGame(index: Int) -> Games {
-
-        return games[index]
+    func getGame(index: Int, pageController:Bool) -> Games {
+ 
+        return pageController ? pageControlGames[index] : games[index]
     }
 }
 

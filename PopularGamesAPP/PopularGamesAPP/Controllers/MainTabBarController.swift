@@ -53,21 +53,11 @@ extension MainTabBarController {
          tabBar.tintColor = UIColor(red: 48/255, green: 41/255, blue: 57/255, alpha: 1.0)
          tabBar.layer.cornerRadius = 12
          tabBar.clipsToBounds = true
-//
-//
-//         let backgroundView = UIView(frame: CGRect(x: 12, y: 0, width: tabBar.bounds.width - 24, height: tabBar.bounds.height))
-//         backgroundView.backgroundColor = .systemGray5
-//         backgroundView.layer.cornerRadius = 12
-//         backgroundView.clipsToBounds = true
-//
-//
+
          let separatorView = UIView(frame: CGRect(x: tabBar.bounds.width / 2, y: 0, width: 1, height: tabBar.bounds.height))
          separatorView.backgroundColor = UIColor(red: 48/255, green: 41/255, blue: 57/255, alpha: 1.0)
-//
-//
          tabBar.insertSubview(separatorView, at: 0)
-//
-//         tabBar.insertSubview(backgroundView, at: 0)
+
       }
   }
 

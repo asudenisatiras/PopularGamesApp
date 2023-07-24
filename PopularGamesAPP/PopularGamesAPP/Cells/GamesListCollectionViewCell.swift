@@ -120,6 +120,14 @@ import UIKit
 class GamesListCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "GamesListCollectionViewCell"
 
+    var viewModel: GamesListCellViewModelProtocol! {
+        didSet{
+            viewModel.delegate = self
+            viewModel.downloadImage()
+            configure()
+        }
+    }
+    
     public let gameImageView: UIImageView = {
        let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -226,9 +234,20 @@ extension GamesListCollectionViewCell{
         ])
     }
 
-    func configure(with viewModel: GamesListCellViewModelProtocol) {
-           viewModel.configure(cell: self)
+    func configure() {
+        gameNameLabel.text = viewModel.gameName
+        ratesLabel.text = viewModel.ratingText
+        releasedDate.text = viewModel.releaseDateText
        }
 
 
+}
+extension GamesListCollectionViewCell : GamesListCellViewModelDelegate {
+    func imageDidDownload(_ data: Data) {
+        DispatchQueue.main.async { [weak self] in
+            self?.gameImageView.image = UIImage(data: data)
+        }
+    }
+    
+    
 }

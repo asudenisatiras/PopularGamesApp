@@ -68,7 +68,7 @@ enum Constants: String {
 // MARK: Protocol
 public protocol GamesServiceProtocol: AnyObject {
     func fetchGames(completion: @escaping (Result<[Games], Error>) -> Void)
-    func fetchGameDetails(with id: Int, completion: @escaping (Result<VideoGames, Error>) -> Void)
+    func fetchGameDetails(with id: Int, completion: @escaping (Result<GamesDetails, Error>) -> Void)
 }
 
 public class GamesService: GamesServiceProtocol {
@@ -148,7 +148,7 @@ public class GamesService: GamesServiceProtocol {
             task.resume()
         }
     // MARK: Fetch Game Details
-    public func fetchGameDetails(with id: Int, completion: @escaping (Result<VideoGames, Error>) -> Void) {
+    public func fetchGameDetails(with id: Int, completion: @escaping (Result<GamesDetails, Error>) -> Void) {
         let urlString = Constants.baseURL.rawValue + "/api/games/\(id)?key=" + Constants.APIKey.rawValue
         
         guard let url = URL(string: urlString) else {
@@ -171,7 +171,7 @@ public class GamesService: GamesServiceProtocol {
             let decoder = JSONDecoder()
             
             do {
-                    let response = try decoder.decode(VideoGames.self, from: data)
+                    let response = try decoder.decode(GamesDetails.self, from: data)
                     completion(.success(response))
                 } catch {
                     print("********** JSON DECODE ERROR *******")

@@ -59,7 +59,7 @@ class FavoriteViewModel {
         return favoriteGames[index]
     }
 
-    func fetchGameDetails(for selectedGame: GamesCoreData, completion: @escaping (Result<VideoGames, Error>) -> Void) {
+    func fetchGameDetails(for selectedGame: GamesCoreData, completion: @escaping (Result<GamesDetails, Error>) -> Void) {
         service.fetchGameDetails(with: Int(selectedGame.id)) { result in
             switch result {
             case .success(let gameDetails):
@@ -70,4 +70,6 @@ class FavoriteViewModel {
         }
     }
 }
+
+
 

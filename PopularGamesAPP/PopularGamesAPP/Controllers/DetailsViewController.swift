@@ -24,11 +24,19 @@ class DetailsViewController: UIViewController {
     public var metacriticR: String?
     public var detailsL: String?
     public var gameid: Int32?
+    
+    var viewModel: DetailsViewModelProtocol! {
+        didSet {
+            viewModel.delegate = self
+            
+        }
+    }
+    
     convenience init(gameImage: UIImage?) {
             self.init()
             self.gameImage = gameImage
         }
-    
+   
     public var imageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 12
@@ -80,19 +88,22 @@ class DetailsViewController: UIViewController {
         super.viewDidLoad()
         setup()
         layout()
-        updateFavoriteButton()
-       
-           }
-           private func updateFavoriteButton() {
-                 guard let gameid = gameid else { return }
-                 let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
-               let favoriteBarButton = UIBarButtonItem(image: isFavorite ? UIImage(systemName: "heart.fill") : UIImage(systemName:  "heart"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
-                 navigationItem.rightBarButtonItem = favoriteBarButton
-             }
+        
+        
+    }
+    private func updateFavoriteButton() {
+        guard let gameid = viewModel.gameId else { return }
+        let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
+        let favoriteBarButton = UIBarButtonItem(image: isFavorite ? UIImage(systemName: "heart.fill") : UIImage(systemName:  "heart"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
+        navigationItem.rightBarButtonItem = favoriteBarButton
+    }
        
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+       setupScrollViewContent()
+    }
+    private func setupScrollViewContent(){
         var contentHeight: CGFloat = 0
         let contentWidth: CGFloat = view.bounds.inset(by: view.safeAreaInsets).size.width - Constants.scrollViewPadding.left - Constants.scrollViewPadding.right
         
@@ -120,7 +131,6 @@ class DetailsViewController: UIViewController {
             height: contentHeight
         )
     }
-    
     var constraints = [NSLayoutConstraint]()
     private func calculateStackViewHeight() -> CGFloat {
         var result: CGFloat = detailsStackView.spacing * CGFloat(detailsStackView.arrangedSubviews.count-1)
@@ -215,46 +225,11 @@ extension DetailsViewController {
         
     }
  
-//        @objc private func favoriteButtonTapped() {
-//            guard let gameName = gameName,
-//                  let releasedDate = releasedDate,
-//                  let metacriticRate = metacriticR,
-//                  let gameid = gameid,
-//                  let backgroundImage = imageView.image else {
-//                print("Favorite button: Missing required data")
-//                return
-//            }
-//
-//            let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
-//
-//            if isFavorite {
-//
-//                CoreDataManager.shared.removeFavoriteGame(id: Int32(Int(gameid)))
-//
-//                let alert = UIAlertController(title: "Favorilerden Çıkarıldı", message: "Oyun favorilerden çıkarıldı.", preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
-//                present(alert, animated: true, completion: nil)
-//            } else {
-//
-//                let backgroundImageData = backgroundImage.pngData()?.base64EncodedString() ?? ""
-//                       CoreDataManager.shared.saveGameData(name: gameName, released: releasedDate, backgroundImage: backgroundImageData, id: gameid)
-//
-//
-//                let alert = UIAlertController(title: "Favorilere Eklendi", message: "Oyun favorilere eklendi.", preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
-//                present(alert, animated: true, completion: nil)
-//            }
-//
-//
-//            let favoriteBarButton = UIBarButtonItem(image: isFavorite ? UIImage(systemName: "heart") : UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
-//            navigationItem.rightBarButtonItem = favoriteBarButton
-//            updateFavoriteButton()
-//        }
     @objc private func favoriteButtonTapped() {
-        guard let gameName = gameName,
-              let releasedDate = releasedDate,
-              let metacriticRate = metacriticR,
-              let gameid = gameid,
+        guard let gameName = viewModel.gameName,
+              let releasedDate = viewModel.releasedDate,
+              let metacriticRate = viewModel.metacriticRate,
+              let gameid = viewModel.gameId,
               let backgroundImage = imageView.image else {
             print("Favorite button: Missing required data")
             return
@@ -264,14 +239,14 @@ extension DetailsViewController {
 
         if isFavorite {
             CoreDataManager.shared.removeFavoriteGame(id: Int32(Int(gameid)))
-            // Alt bildirim göstermek için presentBottomAlert fonksiyonunu çağırma
+           
             self.presentBottomAlert(
                 title: "Favorite Updates",
                 message: "Do you want this game to be removed from the favorites?",
                 okTitle: "Yes",
                 cancelTitle: "Cancel",
                 okAction: {
-                    // "Tamam" düğmesine basıldığında yapılacak işlemler
+                    
                     let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(self.favoriteButtonTapped))
                     self.navigationItem.rightBarButtonItem = favoriteBarButton
                     self.updateFavoriteButton()
@@ -286,7 +261,7 @@ extension DetailsViewController {
                 okTitle: "Yes",
                 cancelTitle: "Cancel",
                 okAction: {
-                    // "Tamam" düğmesine basıldığında yapılacak işlemler
+                   
                     let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(self.favoriteButtonTapped))
                     self.navigationItem.rightBarButtonItem = favoriteBarButton
                     self.updateFavoriteButton()
@@ -319,4 +294,28 @@ extension DetailsViewController {
         return htmlLessString
     }
 
+}
+extension DetailsViewController : DetailsViewModelDelegate {
+    func imageDownloadFinished(data: Data) {
+        DispatchQueue.main.async { [weak self] in
+            self?.imageView.image = UIImage(data: data)
+        }
+    }
+    
+    func detailDownloadFinished() {
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self else {return} // bi daha self yazmamak için!!
+            nameOfGameLabel.text = self.viewModel.gameName
+            releaseDate.text = self.viewModel.releasedDate
+            metacriticRate.text = String(self.viewModel.metacriticRate ?? 0)
+            descriptionLabel.text = self.viewModel.description
+            setupScrollViewContent()
+            updateFavoriteButton()
+        }
+         
+        viewModel.imageDownloadStart()
+    }
+    
+    
 }

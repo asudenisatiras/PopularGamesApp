@@ -38,5 +38,23 @@ public  let metacritic: Int?
     }
 
 }
-
+public struct GamesDetails: Decodable {
+    public let name: String?
+    public let released: String?
+    public let backgroundImage:String?
+    public let id: Int32?
+    public let rating: Double?
+    public let metacritic: Int?
+    public let description: String?
+    
+    enum CodingKeys: String,CodingKey {
+        case name
+        case released
+        case backgroundImage = "background_image"
+        case id
+        case rating
+        case metacritic
+        case description = "description_raw"//<p> kalkıyo!!
+    }
+}
 

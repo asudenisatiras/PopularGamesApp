@@ -27,6 +27,16 @@ public  let rating: Double?
 public  let ratingTop: Int?
 public  let metacritic: Int?
 
+   public init(id: Int32?, name: String?, released: String?, backgroundImage: String?, rating: Double?, ratingTop: Int?, metacritic: Int?) {
+        self.id = id
+        self.name = name
+        self.released = released
+        self.backgroundImage = backgroundImage
+        self.rating = rating
+        self.ratingTop = ratingTop
+        self.metacritic = metacritic
+    }
+    
     enum CodingKeys: String, CodingKey {
         case name, released
         case id

@@ -39,12 +39,18 @@ final class HomeViewModel: NSObject {
     var allGames: [Games] = []
     var games: [Games] = []
     var pageControlGames : [Games] = []
-    let service = GamesService()
+    var service : GamesServiceProtocol
     var currentPageIndex = 0
     var isHeaderHidden: Bool = true
 
     weak var delegate: HomeViewModelDelegate?
 
+    
+    init(service: GamesServiceProtocol = GamesService()) {
+        self.service = service
+        
+    }
+    
     @objc private func performSearch(
         _ searchText: String?
     ) {
@@ -71,9 +77,8 @@ final class HomeViewModel: NSObject {
 extension HomeViewModel: HomeViewModelProtocol {
     
     var gamesCount: Int {
-        let count = games.count
-        let difference = abs(count)
-        return (count >= 0) ? count : 0
+        
+        return games.count
     }
 
     var pageViewControllerGameCount: Int {
@@ -118,8 +123,8 @@ extension HomeViewModel: HomeViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let games):
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
+               
+                    
                     self.allGames = games
 
                     if searchText?.isEmpty ?? true {
@@ -130,7 +135,7 @@ extension HomeViewModel: HomeViewModelProtocol {
                     }
 
                     delegate?.gamesListDownloadFinished()
-                }
+                
             case .failure(let error):
                 print("FetchGames Error: \(error)")
             }

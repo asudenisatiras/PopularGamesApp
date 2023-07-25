@@ -12,42 +12,39 @@ import GamesAPI
 protocol FavoriteViewModelDelegate: AnyObject {
     func didFetchFavoriteGames()
 }
-
-class FavoriteViewModel {
+protocol FavoriteViewModelProtocol{
+    var delegate : FavoriteViewModelDelegate? { get set }
+    func fetchFavoriteGames()
+    func deleteAllFavoriteGames()
+    func numberOfFavoriteGames() -> Int
+    func favoriteGame(at index: Int) -> Games
+}
+class FavoriteViewModel: FavoriteViewModelProtocol {
     weak var delegate: FavoriteViewModelDelegate?
-    public let service = GamesService()
-    private var favoriteGames: [GamesCoreData] = []
+    public let service : GamesServiceProtocol
+    public let coreDataService : CoreDataManagerProtocol
+    private var favoriteGames: [Games] = []
 
+    
+    init(service: GamesServiceProtocol = GamesService(), coreDataService : CoreDataManagerProtocol = CoreDataManager.shared ) {
+        self.service = service
+        self.coreDataService = coreDataService
+    }
+    
+    
     func fetchFavoriteGames() {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let managedContext = appDelegate.persistentContainer.viewContext
-            let fetchRequest: NSFetchRequest<GamesCoreData> = GamesCoreData.fetchRequest()
-
-            do {
-                favoriteGames = try managedContext.fetch(fetchRequest)
-                delegate?.didFetchFavoriteGames()
-            } catch {
-                print("Error fetching favorite games: \(error.localizedDescription)")
-            }
-        }
+        favoriteGames = coreDataService.fetchFavoriteGames()
+        delegate?.didFetchFavoriteGames()
+        
     }
 
     func deleteAllFavoriteGames() {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let managedContext = appDelegate.persistentContainer.viewContext
-            let fetchRequest: NSFetchRequest<GamesCoreData> = GamesCoreData.fetchRequest()
-
-            do {
-                let favorites = try managedContext.fetch(fetchRequest)
-                for game in favorites {
-                    managedContext.delete(game)
-                }
-                try managedContext.save()
-                favoriteGames.removeAll()
-                delegate?.didFetchFavoriteGames()
-            } catch {
-                print("Error deleting favorite games: \(error.localizedDescription)")
-            }
+        let isDeleted = coreDataService.deleteAllFavoriteGames()
+        if isDeleted {
+            favoriteGames.removeAll()
+            delegate?.didFetchFavoriteGames()
+        } else {
+            //TODO: HATA MESAJI BASTIR!!
         }
     }
 
@@ -55,7 +52,7 @@ class FavoriteViewModel {
         return favoriteGames.count
     }
 
-    func favoriteGame(at index: Int) -> GamesCoreData {
+    func favoriteGame(at index: Int) -> Games {
         return favoriteGames[index]
     }
 

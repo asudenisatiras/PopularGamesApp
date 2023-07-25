@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import GamesAPI
 class FavoritesCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "FavoritesCollectionViewCell"
     public let gameImageView: UIImageView = {
@@ -60,7 +60,7 @@ extension FavoritesCollectionViewCell{
             fullStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    func configure(with game: GamesCoreData) {
+    func configure(with game: Games) {
         if let imageData = Data(base64Encoded: game.backgroundImage!) {
             if let image = UIImage(data: imageData) {
                 gameImageView.image = image

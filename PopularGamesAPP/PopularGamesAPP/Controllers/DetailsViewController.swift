@@ -226,42 +226,38 @@ extension DetailsViewController {
     }
  
     @objc private func favoriteButtonTapped() {
-        guard let gameName = viewModel.gameName,
-              let releasedDate = viewModel.releasedDate,
-              let metacriticRate = viewModel.metacriticRate,
-              let gameid = viewModel.gameId,
-              let backgroundImage = imageView.image else {
-            print("Favorite button: Missing required data")
-            return
-        }
 
-        let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
+        let isFavorite = viewModel.isCoreDataSaved()
+        
 
         if isFavorite {
-            CoreDataManager.shared.removeFavoriteGame(id: Int32(Int(gameid)))
+            
            
             self.presentBottomAlert(
                 title: "Favorite Updates",
                 message: "Do you want this game to be removed from the favorites?",
                 okTitle: "Yes",
                 cancelTitle: "Cancel",
-                okAction: {
+                okAction: { [weak self] in
+                    guard let self else {
+                        return }
+                    viewModel.removeFavoriteGame()
                     
-                    let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(self.favoriteButtonTapped))
-                    self.navigationItem.rightBarButtonItem = favoriteBarButton
-                    self.updateFavoriteButton()
+                    let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
+                    navigationItem.rightBarButtonItem = favoriteBarButton
+                    updateFavoriteButton()
                 }
             )
         } else {
-            let backgroundImageData = backgroundImage.pngData()?.base64EncodedString() ?? ""
-            CoreDataManager.shared.saveGameData(name: gameName, released: releasedDate, backgroundImage: backgroundImageData, id: gameid)
+            let backgroundImageData = imageView.image?.pngData()?.base64EncodedString() ?? ""
+           
             self.presentBottomAlert(
                 title: "Favorite Updates",
                 message: "Do you want this game to be added to your favorites?",
                 okTitle: "Yes",
                 cancelTitle: "Cancel",
                 okAction: {
-                   
+                    self.viewModel.saveGameData(imageData: backgroundImageData)
                     let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(self.favoriteButtonTapped))
                     self.navigationItem.rightBarButtonItem = favoriteBarButton
                     self.updateFavoriteButton()
@@ -305,7 +301,7 @@ extension DetailsViewController : DetailsViewModelDelegate {
     func detailDownloadFinished() {
         
         DispatchQueue.main.async { [weak self] in
-            guard let self else {return} // bi daha self yazmamak için!!
+            guard let self else {return}
             nameOfGameLabel.text = self.viewModel.gameName
             releaseDate.text = self.viewModel.releasedDate
             metacriticRate.text = String(self.viewModel.metacriticRate ?? 0)

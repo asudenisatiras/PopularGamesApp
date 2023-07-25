@@ -21,9 +21,12 @@ extension MainTabBarController {
         let homeViewController = HomeViewController()
         homeViewController.viewModel = HomeViewModel()
         
+        let favoriteViewController = FavoriteViewController()
+        favoriteViewController.viewModel = FavoriteViewModel()
+        
         viewControllers = [
             createViewController(rootViewController: homeViewController,title: "Games", imageName: "gamecontroller.fill"),
-            createViewController(rootViewController: FavoriteViewController(), title: "Favorites",imageName: "heart.fill")
+            createViewController(rootViewController: favoriteViewController, title: "Favorites",imageName: "heart.fill")
         ]
        
     }

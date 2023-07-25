@@ -6,8 +6,14 @@
 //
 
 import UIKit
-import GamesAPI // data models are defined in the API
-
+//import GamesAPI // data models are defined in the API
+protocol HomeViewControllerProtocol{
+    func setup()
+    func setupPageControlHeight()
+    func layout()
+    func updateNoDataLabelVisibility()
+    func gamesListDownloadFinished()
+}
 extension HomeViewController {
     fileprivate enum Constants {
         static let pageControllerHeight: CGFloat = 220
@@ -15,7 +21,7 @@ extension HomeViewController {
     }
 }
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecognizerDelegate {
+class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecognizerDelegate, HomeViewControllerProtocol {
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
     var pageControl: UIPageControl!
@@ -44,10 +50,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecogn
     var isSearchActive = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup() // TODO: P EKLE
-        layout() // TODO: P EKLE
+        setup()
+        layout()
         viewModel.downloadGames(nil)
-        setupp() // TODO: DÜZELT
+        pageControllerSetup() // TODO: DÜZELT
     }
     // TODO: P EKLE
     private func createPageViewController(with viewModel: PageViewModel) -> UIViewController {
@@ -68,7 +74,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecogn
 }
 
 extension HomeViewController {
-    private func setup(){
+     func setup(){
         view.backgroundColor = UIColor(red: 11/255, green: 4/255, blue: 22/255, alpha: 1.0)
         
         pageControl = UIPageControl()
@@ -126,7 +132,7 @@ extension HomeViewController {
     
     
     
-    private func setupPageControlHeight() {
+     func setupPageControlHeight() {
         pageControllerHeightAnchor = pageViewController.view.heightAnchor.constraint(
             equalToConstant: Constants.pageControllerHeight)
         pageControlHeightAnchor = pageControl.heightAnchor.constraint(
@@ -136,7 +142,7 @@ extension HomeViewController {
         pageControlHeightAnchor?.isActive = true
     }
     
-    private func layout() {
+     func layout() {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -176,7 +182,7 @@ extension HomeViewController: UIPageViewControllerDataSource, UIPageViewControll
             pageControl.currentPage = currentIndex
         }
     }
-    private func setupp() {
+    private func pageControllerSetup() {
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pageViewControllerTapped))
         pageViewController.view.addGestureRecognizer(tapGestureRecognizer)
@@ -226,6 +232,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         DispatchQueue.main.async { [weak self] in
             let detailsViewController = DetailsViewController()
             detailsViewController.viewModel = DetailsViewModel(gamesId: Int(id))
+            detailsViewController.hidesBottomBarWhenPushed = true
             self?.navigationController?.pushViewController(detailsViewController, animated: true)
         }
     }
@@ -252,7 +259,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout{
 }
 
 extension HomeViewController {
-    private func updateNoDataLabelVisibility() {
+     func updateNoDataLabelVisibility() {
         if isSearchActive && viewModel.gamesCount == 0 {
             noDataLabel.isHidden = false
         } else {
@@ -278,7 +285,7 @@ extension HomeViewController {
 extension HomeViewController: HomeViewModelDelegate {
     
     
-    private func setupPages(with viewModels: [PageViewModel]) {
+     func setupPages(with viewModels: [PageViewModel]) {
         self.pages = viewModels.map { createPageViewController(with: $0) }
         self.pageControl.numberOfPages = self.pages.count
         self.pageViewController.setViewControllers([self.pages.first].compactMap { $0 }, direction: .forward, animated: true, completion: nil)
@@ -287,11 +294,15 @@ extension HomeViewController: HomeViewModelDelegate {
     func gamesListDownloadFinished() {
         let firstThreeGames = viewModel.getFirstThreeGames()
         let pageViewModels = firstThreeGames.map { PageViewModel(game: $0) }
+        DispatchQueue.main.async { [weak self] in
+            guard let self else {
+                return
+            }
+            setupPages(with: pageViewModels)
+            collectionView.reloadData()
+            updateNoDataLabelVisibility()
+        }
         
-        setupPages(with: pageViewModels)
-        collectionView.reloadData()
-        
-        updateNoDataLabelVisibility()
     }
     
 }

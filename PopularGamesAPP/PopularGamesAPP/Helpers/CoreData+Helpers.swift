@@ -4,22 +4,28 @@
 //
 //  Created by Asude Nisa Tıraş on 16.07.2023.
 //
-
+import GamesAPI
 import CoreData
 import UIKit
-
-class CoreDataManager {
+protocol CoreDataManagerProtocol {
+    func addFavoriteGame(id: Int32)
+    func isGameFavorite(id: Int32) -> Bool
+    func saveGameData(name: String, released: String, backgroundImage: String, id: Int32)
+    func deleteGameData(withId id: Int32)
+    func isGameIdSaved(_ id: Int32) -> Bool
+    func removeFavoriteGame(id: Int32)
+    func fetchFavoriteGames() -> [Games]
+    func deleteAllFavoriteGames() -> Bool
+}
+class CoreDataManager: CoreDataManagerProtocol {
     static let shared = CoreDataManager()
-//    private var favoriteGameIds: Set<Int> = []
-
     private var favoriteGameIds: Set<Int32> = []
 
-       // Favori oyun ID'lerini ekleyen metod
        func addFavoriteGame(id: Int32) {
            favoriteGameIds.insert(id)
        }
 
-       // Oyunun favori olup olmadığını kontrol eden metod
+       
        func isGameFavorite(id: Int32) -> Bool {
            return favoriteGameIds.contains(id)
        }
@@ -36,7 +42,7 @@ class CoreDataManager {
 
            do {
                try context.save()
-               favoriteGameIds.insert(id) // Veritabanına kaydederken aynı zamanda favori setine de ekliyoruz
+               favoriteGameIds.insert(id)
                print("Kayıt başarılı")
            } catch {
                print("Kayıt başarısız: \(error.localizedDescription)")
@@ -53,7 +59,7 @@ class CoreDataManager {
                let results = try context.fetch(fetchRequest)
                if let games = results as? [NSManagedObject], let game = games.first {
                    context.delete(game)
-                   favoriteGameIds.remove(id) // Veritabanından silerken aynı zamanda favori setinden de çıkarıyoruz
+                   favoriteGameIds.remove(id)
                    try context.save()
                    print("Veri silindi. ID: \(id)")
                }
@@ -79,7 +85,7 @@ class CoreDataManager {
     func removeFavoriteGame(id: Int32) {
         favoriteGameIds.remove(Int32(Int(id)))
 
-           // Veritabanından silme işlemini gerçekleştiriyoruz.
+           
            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
            let context = appDelegate.persistentContainer.viewContext
            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "GamesCoreData")
@@ -96,6 +102,47 @@ class CoreDataManager {
                print("Veri silinemedi: \(error.localizedDescription)")
            }
        }
-    
+    func fetchFavoriteGames() -> [Games] {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let managedContext = appDelegate.persistentContainer.viewContext
+            let fetchRequest: NSFetchRequest<GamesCoreData> = GamesCoreData.fetchRequest()
+
+            do {
+                let result = try managedContext.fetch(fetchRequest)
+                return result.map({
+                    Games(id: $0.id,
+                          name: $0.name,
+                          released: $0.released,
+                          backgroundImage: $0.backgroundImage,
+                          rating: nil,
+                          ratingTop: nil,
+                          metacritic: nil)
+                })
+            } catch {
+                return []
+            }
+        } else {
+            return []
+        }
+    }
+    func deleteAllFavoriteGames() -> Bool {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let managedContext = appDelegate.persistentContainer.viewContext
+            let fetchRequest: NSFetchRequest<GamesCoreData> = GamesCoreData.fetchRequest()
+
+            do {
+                let favorites = try managedContext.fetch(fetchRequest)
+                for game in favorites {
+                    managedContext.delete(game)
+                }
+                try managedContext.save()
+                return true
+            } catch {
+                return false
+            }
+        } else {
+            return false 
+        }
+    }
 }
 

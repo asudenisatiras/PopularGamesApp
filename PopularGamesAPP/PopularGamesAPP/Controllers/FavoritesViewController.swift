@@ -9,7 +9,12 @@ import UIKit
 class FavoriteViewController: UIViewController {
     
     var collectionView: UICollectionView!
-    var viewModel: FavoriteViewModel!
+    
+    var viewModel: FavoriteViewModelProtocol! {
+        didSet{
+            viewModel.delegate = self
+        }
+    }
    
     private var deleteAllFavoritesButton: UIButton = {
         let button = UIButton()
@@ -22,9 +27,6 @@ class FavoriteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-   
-           viewModel = FavoriteViewModel()
-           viewModel.delegate = self
            setup()
            layout()
         
@@ -73,33 +75,24 @@ extension FavoriteViewController {
     }
 
 extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return viewModel.numberOfFavoriteGames()
-//    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let numberOfFavorites = viewModel.numberOfFavoriteGames()
         if numberOfFavorites == 0 {
-            // Eğer favorilerde oyun yoksa, bir görüntü döndür
+           
             return 1
         }
         return numberOfFavorites
     }
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoritesCollectionViewCell.reuseIdentifier, for: indexPath) as! FavoritesCollectionViewCell
-//
-//        let game = viewModel.favoriteGame(at: indexPath.item)
-//        cell.configure(with: game)
-//
-//        return cell
-//    }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let numberOfFavorites = viewModel.numberOfFavoriteGames()
         if numberOfFavorites == 0 {
-            // Favorilerde oyun yok, görüntü hücresi oluştur
+           
             let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NoFavoritesCell", for: indexPath) as! EmptyFavoritesCollectionViewCell
             return imageCell
         } else {
-            // Favori oyun hücresi oluştur
+           
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoritesCollectionViewCell.reuseIdentifier, for: indexPath) as! FavoritesCollectionViewCell
 
             let game = viewModel.favoriteGame(at: indexPath.item)
@@ -111,35 +104,20 @@ extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewData
 
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedGame = viewModel.favoriteGame(at: indexPath.row)
-        viewModel.service.fetchGameDetails(with: Int(selectedGame.id)) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let gameDetails):
-                DispatchQueue.main.async {
-                    let detailsViewController = DetailsViewController()
-                    detailsViewController.gameName = selectedGame.name
-                    detailsViewController.releasedDate = selectedGame.released
-                    detailsViewController.detailsL = gameDetails.description
-                    detailsViewController.gameid = selectedGame.id
-                    detailsViewController.metacriticRate.isHidden = true
-                    if let backgroundImageData = Data(base64Encoded: selectedGame.backgroundImage ?? ""),
-                       let backgroundImage = UIImage(data: backgroundImageData) {
-                        detailsViewController.gameImage = backgroundImage
-                    }
-                    
-                    detailsViewController.hidesBottomBarWhenPushed = true
-                    
-                    self.navigationController?.pushViewController(detailsViewController, animated: true)
-                }
-            case .failure(let error):
-                print("FetchGameDetails Error: \(error)")
-            }
+        guard let gameId = viewModel.favoriteGame(at: indexPath.row).id else {
+            return //TODO: HATA MESAJI PRINT ETTİR.
         }
+            
+        DispatchQueue.main.async {
+            let detailsViewController = DetailsViewController()
+            detailsViewController.viewModel = DetailsViewModel(gamesId: Int(gameId))
+            
+            detailsViewController.hidesBottomBarWhenPushed = true
+            
+            self.navigationController?.pushViewController(detailsViewController, animated: true)
+        }
+    
     }
-
-
-
 }
 
 

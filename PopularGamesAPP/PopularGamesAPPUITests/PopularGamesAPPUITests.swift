@@ -42,59 +42,56 @@ final class PopularGamesAPPUITests: XCTestCase {
         
         let app = XCUIApplication()
         app.launch()
-                app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.tap()
+        let collectionViewsQuery = app.collectionViews
+                        app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.tap()
         
         let gamesNavigationBar = app.navigationBars["Games"]
         let loveButton = gamesNavigationBar.buttons["love"]
         loveButton.tap()
-        sleep(2)
-        app.alerts["Favorilere Eklendi"].scrollViews.otherElements.buttons["Tamam"].tap()
         
+        let yesButton = app/*@START_MENU_TOKEN@*/.scrollViews/*[[".otherElements[\"Favorite Updates\"].scrollViews",".scrollViews"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.otherElements.buttons["Yes"]
+        yesButton.tap()
         loveButton.tap()
-        app.alerts["Favorilerden Çıkarıldı"].scrollViews.otherElements.buttons["Tamam"].tap()
+        yesButton.tap()
         
         let gamesButton = gamesNavigationBar.buttons["Games"]
         gamesButton.tap()
+        collectionViewsQuery/*@START_MENU_TOKEN@*/.staticTexts["Counter-Strike: Global Offensive"]/*[[".cells.staticTexts[\"Counter-Strike: Global Offensive\"]",".staticTexts[\"Counter-Strike: Global Offensive\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        gamesButton.tap()
         app.scrollViews.children(matching: .other).element.children(matching: .other).element.tap()
         gamesButton.tap()
-        
-        let findPopularGamesSearchField = gamesNavigationBar.searchFields["Find Popular Games..."]
-        findPopularGamesSearchField.tap()
-        //app.staticTexts["Upps! The game you want to search for could not be found. "].tap()
-        app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.tap()
-        gamesButton.tap()
-        findPopularGamesSearchField.tap()
+        gamesNavigationBar.searchFields["Find Popular Games..."].tap()
         app.tabBars["Tab Bar"].buttons["Favorites"].tap()
-                
-        //niye bu şekilde tercih edildi tercih sebebi neden viper?
-        
      
-//        let app = XCUIApplication()
-//        app.launch()
-//
-//        app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.tap()
+        
+        let favoritesNavigationBar = app.navigationBars["Favorites"]
+       
+        
+//                app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.tap()
 //
 //        let gamesNavigationBar = app.navigationBars["Games"]
-//        gamesNavigationBar.buttons["love"].tap()
+//        let loveButton = gamesNavigationBar.buttons["love"]
+//        loveButton.tap()
+//        sleep(2)
+//        app.alerts["Favorilere Eklendi"].scrollViews.otherElements.buttons["Yes"].tap()
 //
-//        let favorilereEklendiExpectation = expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.alerts["Favorilere Eklendi"], handler: nil)
-//        wait(for: [favorilereEklendiExpectation], timeout: 5) // Wait for 5 seconds for the alert to appear.
-//
-//        app.alerts["Favorilere Eklendi"].scrollViews.otherElements.buttons["Tamam"].tap()
+//        loveButton.tap()
+//        app.alerts["Favorilerden Çıkarıldı"].scrollViews.otherElements.buttons["Yes"].tap()
 //
 //        let gamesButton = gamesNavigationBar.buttons["Games"]
 //        gamesButton.tap()
 //        app.scrollViews.children(matching: .other).element.children(matching: .other).element.tap()
-//        gamesNavigationBar.tap()
+//        gamesButton.tap()
 //
 //        let findPopularGamesSearchField = gamesNavigationBar.searchFields["Find Popular Games..."]
 //        findPopularGamesSearchField.tap()
-//        app.staticTexts["Upps! The game you want to search for could not be found. "].tap()
+//        //app.staticTexts["Upps! The game you want to search for could not be found. "].tap()
+//        app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.tap()
 //        gamesButton.tap()
 //        findPopularGamesSearchField.tap()
-//        findPopularGamesSearchField.buttons["Clear text"].tap()
 //        app.tabBars["Tab Bar"].buttons["Favorites"].tap()
-//        app.navigationBars["Favorites"].buttons["trash"].tap()
+                
+        
     
     }
 }

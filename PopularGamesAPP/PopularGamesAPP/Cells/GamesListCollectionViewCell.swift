@@ -178,6 +178,12 @@ class GamesListCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func prepareForReuse() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {return}
+            gameImageView.image = nil //TODO: APIDEN GELEN RESİMLERİ DÜZELT(LİNKLE)!!!
+        }
+    }
 }
 extension GamesListCollectionViewCell{
     private func style(){

@@ -28,7 +28,6 @@ class GamesListCellViewModel: GamesListCellViewModelProtocol {
         self.game = game
     }
 
-    // Computed properties to expose relevant information from the Games object
     var gameName: String? {
         return game.name
     }
@@ -49,7 +48,6 @@ class GamesListCellViewModel: GamesListCellViewModelProtocol {
     }
 
     func downloadImage() {
-
 
         if let artworkUrl = artworkURL() {
             imageDownloadTask?.cancel()

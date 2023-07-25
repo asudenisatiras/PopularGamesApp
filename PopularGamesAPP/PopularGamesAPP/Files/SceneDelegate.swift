@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = createTabBarController(rootViewController: MainTabBarController())
         window?.makeKeyAndVisible()
     }
+    
     fileprivate func createTabBarController(rootViewController: UITabBarController)-> UITabBarController{
         let appearance = UITabBarAppearance()
         appearance.configureWithDefaultBackground()
@@ -29,7 +30,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return rootViewController
     }
     
-
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

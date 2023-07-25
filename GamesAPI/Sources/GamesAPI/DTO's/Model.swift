@@ -13,21 +13,19 @@ public struct VideoGames: Decodable {
     public let next: String?
     public let results: [Games]?
     public let description: String?
-    //public let filters: Filters?
-    
     
 }
 
 // MARK: - Result
 public struct Games: Decodable {
-public  let id: Int32?
-public  let name, released: String?
-public  let backgroundImage: String?
-public  let rating: Double?
-public  let ratingTop: Int?
-public  let metacritic: Int?
-
-   public init(id: Int32?, name: String?, released: String?, backgroundImage: String?, rating: Double?, ratingTop: Int?, metacritic: Int?) {
+    public let id: Int32?
+    public let name, released: String?
+    public let backgroundImage: String?
+    public let rating: Double?
+    public let ratingTop: Int?
+    public let metacritic: Int?
+    
+    public init(id: Int32?, name: String?, released: String?, backgroundImage: String?, rating: Double?, ratingTop: Int?, metacritic: Int?) {
         self.id = id
         self.name = name
         self.released = released
@@ -44,9 +42,9 @@ public  let metacritic: Int?
         case rating
         case ratingTop = "rating_top"
         case metacritic
-    
+        
     }
-
+    
 }
 public struct GamesDetails: Decodable {
     public let name: String?
@@ -64,7 +62,7 @@ public struct GamesDetails: Decodable {
         case id
         case rating
         case metacritic
-        case description = "description_raw"//<p> kalkıyo!!
+        case description = "description_raw"
     }
 }
 

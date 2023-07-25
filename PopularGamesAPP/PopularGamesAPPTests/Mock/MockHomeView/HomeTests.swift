@@ -13,8 +13,7 @@ class HomeTests : XCTestCase {
     var viewModel: HomeViewModelProtocol!
     
     override func setUp() {
-        viewModel = HomeViewModel(service:MockServiceAPI()) //dependency variable: servis oluyor. classle değiştirdik artık hep servise gitmek zorunda kalmıyoruz.
-        
+        viewModel = HomeViewModel(service:MockServiceAPI())
         
     }
     func testFetchGames(){

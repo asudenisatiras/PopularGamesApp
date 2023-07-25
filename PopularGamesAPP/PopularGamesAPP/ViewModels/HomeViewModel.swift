@@ -7,18 +7,17 @@
 
 import Foundation
 import GamesAPI
-
+// MARK: - PageController Calculates
 extension HomeViewModel {
     fileprivate enum Constants {
         static let pageControllerGameCount: Int = 3
     }
 }
-
+// MARK: - HomeViewModel Delegate
 protocol HomeViewModelDelegate: AnyObject {
     func gamesListDownloadFinished()
-    
 }
-
+// MARK: - HomeViewModel Protocol
 protocol HomeViewModelProtocol: AnyObject {
 
     var gamesCount: Int { get }
@@ -34,7 +33,7 @@ protocol HomeViewModelProtocol: AnyObject {
     func getFirstThreeGames() -> [Games]
     func getGame(index: Int,pageController: Bool) -> Games
 }
-
+// MARK: - HomeViewModel Class
 final class HomeViewModel: NSObject {
     var allGames: [Games] = []
     var games: [Games] = []
@@ -45,12 +44,11 @@ final class HomeViewModel: NSObject {
 
     weak var delegate: HomeViewModelDelegate?
 
-    
     init(service: GamesServiceProtocol = GamesService()) {
         self.service = service
-        
     }
     
+    // MARK: - Search Bar Method
     @objc private func performSearch(
         _ searchText: String?
     ) {
@@ -73,7 +71,7 @@ final class HomeViewModel: NSObject {
 
     }
 }
-
+// MARK: - HomeViewModel Extension
 extension HomeViewModel: HomeViewModelProtocol {
     
     var gamesCount: Int {
@@ -114,8 +112,6 @@ extension HomeViewModel: HomeViewModelProtocol {
         }
     }
 
-   
-
     func downloadGames(
         _ searchText: String?
     ) {
@@ -123,18 +119,18 @@ extension HomeViewModel: HomeViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let games):
-               
-                    
-                    self.allGames = games
-
-                    if searchText?.isEmpty ?? true {
-                        self.pageControlGames = Array(games.prefix(3))
-                        self.games = Array(games.dropFirst(3))
-                    } else {
-                        self.performSearch(searchText)
-                    }
-
-                    delegate?.gamesListDownloadFinished()
+                
+                
+                self.allGames = games
+                
+                if searchText?.isEmpty ?? true {
+                    self.pageControlGames = Array(games.prefix(3))
+                    self.games = Array(games.dropFirst(3))
+                } else {
+                    self.performSearch(searchText)
+                }
+                
+                delegate?.gamesListDownloadFinished()
                 
             case .failure(let error):
                 print("FetchGames Error: \(error)")
@@ -143,7 +139,7 @@ extension HomeViewModel: HomeViewModelProtocol {
     }
 
     func getGame(index: Int, pageController:Bool) -> Games {
- 
+        
         return pageController ? pageControlGames[index] : games[index]
     }
 }

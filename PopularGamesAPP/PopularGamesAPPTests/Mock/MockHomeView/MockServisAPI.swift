@@ -45,7 +45,7 @@ final class MockServiceAPI: GamesServiceProtocol{
               rating: 1.3,
               ratingTop: 2,
               metacritic: 94)
-      
+        
     ]
     
     var mockGameDetails: GamesDetails? = .init(
@@ -57,7 +57,7 @@ final class MockServiceAPI: GamesServiceProtocol{
         metacritic: 12,
         description: "aaaa"
     )
-   
+    
     func fetchGames(completion: @escaping (Result<[Games], Error>) -> Void) {
         if mockGames.isEmpty{
             completion(.failure(NSError(domain: "", code: -1, userInfo: nil)))

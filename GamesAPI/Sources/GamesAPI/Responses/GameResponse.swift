@@ -12,6 +12,7 @@ public struct GamesResponse: Decodable {
     private enum RootCodingKeys: String, CodingKey {
         case results
     }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: RootCodingKeys.self)
         self.results = try container.decode([Games].self, forKey: .results)

@@ -21,16 +21,18 @@ protocol DetailsViewModelProtocol {
     func removeFavoriteGame ()
     func saveGameData(imageData: String)
 }
+
 protocol DetailsViewModelDelegate : AnyObject {
     func detailDownloadFinished()
     func imageDownloadFinished(data:Data)
 }
+
 final class DetailsViewModel: DetailsViewModelProtocol {
     func saveGameData(imageData: String) {
         guard let gameName,
               let releasedDate,
               let gameId
-              else {
+        else {
             
             print("Favorite button: Missing required data")
             return
@@ -44,8 +46,6 @@ final class DetailsViewModel: DetailsViewModelProtocol {
         }
     }
     
-  
-    
     func isCoreDataSaved() -> Bool {
         if let gameId {
             return coreDataService.isGameIdSaved(gameId)
@@ -54,7 +54,6 @@ final class DetailsViewModel: DetailsViewModelProtocol {
         }
     }
     
-    
     var service : GamesServiceProtocol
     var coreDataService : CoreDataManagerProtocol
     var gameDetails : GamesDetails?
@@ -62,11 +61,10 @@ final class DetailsViewModel: DetailsViewModelProtocol {
     var gameId: Int32? {
         gameDetails?.id
     }
-        
+    
     var description: String? {
         gameDetails?.description
     }
-    
     
     var gameName: String? {
         gameDetails?.name
@@ -94,10 +92,10 @@ final class DetailsViewModel: DetailsViewModelProtocol {
         if let imageData = try? Data(contentsOf: backgroundImageURL) {
             delegate?.imageDownloadFinished(data: imageData)
         } else {
-           
+            
         }
     }
-
+    
     func fetchGameDetails(gamesId: Int) {
         
         service.fetchGameDetails(with: Int(gamesId)) { [weak self] result in

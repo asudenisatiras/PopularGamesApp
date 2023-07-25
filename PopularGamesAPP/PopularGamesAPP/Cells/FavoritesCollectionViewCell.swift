@@ -7,24 +7,27 @@
 
 import UIKit
 import GamesAPI
+
 class FavoritesCollectionViewCell: UICollectionViewCell {
+    
     static let reuseIdentifier = "FavoritesCollectionViewCell"
+    
     public let gameImageView: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .systemPurple
         return imageView
     }()
     public let gameNameLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "Game Name"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = .white
         return label
     }()
     public let ratesLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "Game Rate"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = .white
@@ -60,6 +63,7 @@ extension FavoritesCollectionViewCell{
             fullStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
+    
     func configure(with game: Games) {
         if let imageData = Data(base64Encoded: game.backgroundImage!) {
             if let image = UIImage(data: imageData) {
@@ -69,12 +73,12 @@ extension FavoritesCollectionViewCell{
                 gameImageView.image = UIImage(named: "loading")
             }
         } else {
-           
+            
             gameImageView.image = UIImage(named: "loading")
         }
-
+        
         gameNameLabel.text = game.name
         ratesLabel.text = game.released
     }
-
+    
 }

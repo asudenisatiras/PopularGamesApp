@@ -24,19 +24,19 @@ class DetailsViewController: UIViewController {
     public var metacriticR: String?
     public var detailsL: String?
     public var gameid: Int32?
+    var constraints = [NSLayoutConstraint]()
     
     var viewModel: DetailsViewModelProtocol! {
         didSet {
             viewModel.delegate = self
-            
         }
     }
     
     convenience init(gameImage: UIImage?) {
-            self.init()
-            self.gameImage = gameImage
-        }
-   
+        self.init()
+        self.gameImage = gameImage
+    }
+    
     public var imageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 12
@@ -45,6 +45,7 @@ class DetailsViewController: UIViewController {
         image.backgroundColor = .purple
         return image
     }()
+    
     public var nameOfGameLabel: UILabel = {
         let label = UILabel()
         label.text = "Name of Game"
@@ -52,6 +53,7 @@ class DetailsViewController: UIViewController {
         label.textColor = .white
         return label
     }()
+    
     public var releaseDate: UILabel = {
         let label = UILabel()
         label.text = "Release Date"
@@ -59,6 +61,7 @@ class DetailsViewController: UIViewController {
         label.textColor = .white
         return label
     }()
+    
     public var metacriticRate: UILabel = {
         let label = UILabel()
         label.text = "Metacritic Rate"
@@ -66,15 +69,17 @@ class DetailsViewController: UIViewController {
         label.textColor = .white
         return label
     }()
+    
     public var descriptionLabel : UILabel = {
         let label = UILabel()
         label.text = "Description"
-
+        
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = .white
         label.numberOfLines = 0
         return label
     }()
+    
     public var favoriteButton: UIButton = {
         let button = UIButton()
         button.imageView?.image = UIImage(systemName: "heart")
@@ -88,21 +93,21 @@ class DetailsViewController: UIViewController {
         super.viewDidLoad()
         setup()
         layout()
-        
-        
+          
     }
+    
     private func updateFavoriteButton() {
         guard let gameid = viewModel.gameId else { return }
         let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
         let favoriteBarButton = UIBarButtonItem(image: isFavorite ? UIImage(systemName: "heart.fill") : UIImage(systemName:  "heart"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
         navigationItem.rightBarButtonItem = favoriteBarButton
     }
-       
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-       setupScrollViewContent()
+        setupScrollViewContent()
     }
+    
     private func setupScrollViewContent(){
         var contentHeight: CGFloat = 0
         let contentWidth: CGFloat = view.bounds.inset(by: view.safeAreaInsets).size.width - Constants.scrollViewPadding.left - Constants.scrollViewPadding.right
@@ -131,7 +136,7 @@ class DetailsViewController: UIViewController {
             height: contentHeight
         )
     }
-    var constraints = [NSLayoutConstraint]()
+    
     private func calculateStackViewHeight() -> CGFloat {
         var result: CGFloat = detailsStackView.spacing * CGFloat(detailsStackView.arrangedSubviews.count-1)
         
@@ -162,14 +167,14 @@ class DetailsViewController: UIViewController {
         
         return result
     }
- 
+    
 }
 extension DetailsViewController {
     private func setup(){
         view.backgroundColor = UIColor(red: 11/255, green: 4/255, blue: 22/255, alpha: 1.0)
-     
+        
         imageView.layer.cornerRadius = 12
-     
+        
         if let gameName = gameName {
             nameOfGameLabel.text = gameName
         }
@@ -187,10 +192,11 @@ extension DetailsViewController {
             let cleanDescription = removeHTMLTags(from: details)
             descriptionLabel.text = cleanDescription
         }
-
+        
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
+        
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor,
@@ -209,11 +215,10 @@ extension DetailsViewController {
                 constant: -Constants.scrollViewPadding.right
             )
         ])
-        
     }
     
     private func layout() {
-
+        
         scrollView.addSubview(imageView)
         
         detailsStackView = UIStackView(arrangedSubviews: [nameOfGameLabel, releaseDate, metacriticRate, descriptionLabel])
@@ -224,16 +229,12 @@ extension DetailsViewController {
         navigationItem.rightBarButtonItem = favoriteBarButton
         
     }
- 
+    
     @objc private func favoriteButtonTapped() {
-
-        let isFavorite = viewModel.isCoreDataSaved()
         
-
+        let isFavorite = viewModel.isCoreDataSaved()
         if isFavorite {
-            
-           
-            self.presentBottomAlert(
+                self.presentBottomAlert(
                 title: "Favorite Updates",
                 message: "Do you want this game to be removed from the favorites?",
                 okTitle: "Yes",
@@ -250,7 +251,7 @@ extension DetailsViewController {
             )
         } else {
             let backgroundImageData = imageView.image?.pngData()?.base64EncodedString() ?? ""
-           
+            
             self.presentBottomAlert(
                 title: "Favorite Updates",
                 message: "Do you want this game to be added to your favorites?",
@@ -265,11 +266,12 @@ extension DetailsViewController {
             )
         }
     }
-
+    
 }
 extension DetailsViewController {
     
     func presentBottomAlert(title: String, message: String, okTitle: String, cancelTitle: String, okAction: @escaping () -> Void) {
+        
         let alert = UIAlertController(title: NSLocalizedString(title, comment: ""), message: NSLocalizedString(message, comment: ""), preferredStyle: .actionSheet)
         
         let okAction = UIAlertAction(title: NSLocalizedString(okTitle, comment: ""), style: .default) { _ in
@@ -283,15 +285,17 @@ extension DetailsViewController {
         
         self.present(alert, animated: true, completion: nil)
     }
+    
     func removeHTMLTags(from text: String) -> String {
         let regex = try! NSRegularExpression(pattern: "<.*?>", options: [])
         let range = NSMakeRange(0, text.utf16.count)
         let htmlLessString = regex.stringByReplacingMatches(in: text, options: [], range: range, withTemplate: "")
         return htmlLessString
     }
-
 }
+
 extension DetailsViewController : DetailsViewModelDelegate {
+    
     func imageDownloadFinished(data: Data) {
         DispatchQueue.main.async { [weak self] in
             self?.imageView.image = UIImage(data: data)
@@ -299,7 +303,6 @@ extension DetailsViewController : DetailsViewModelDelegate {
     }
     
     func detailDownloadFinished() {
-        
         DispatchQueue.main.async { [weak self] in
             guard let self else {return}
             nameOfGameLabel.text = self.viewModel.gameName
@@ -309,9 +312,7 @@ extension DetailsViewController : DetailsViewModelDelegate {
             setupScrollViewContent()
             updateFavoriteButton()
         }
-         
+        
         viewModel.imageDownloadStart()
     }
-    
-    
 }

@@ -43,7 +43,7 @@ final class PopularGamesAPPUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         let collectionViewsQuery = app.collectionViews
-                        app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.tap()
+        app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.tap()
         
         let gamesNavigationBar = app.navigationBars["Games"]
         let loveButton = gamesNavigationBar.buttons["love"]
@@ -62,36 +62,8 @@ final class PopularGamesAPPUITests: XCTestCase {
         gamesButton.tap()
         gamesNavigationBar.searchFields["Find Popular Games..."].tap()
         app.tabBars["Tab Bar"].buttons["Favorites"].tap()
-     
         
         let favoritesNavigationBar = app.navigationBars["Favorites"]
-       
         
-//                app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.tap()
-//
-//        let gamesNavigationBar = app.navigationBars["Games"]
-//        let loveButton = gamesNavigationBar.buttons["love"]
-//        loveButton.tap()
-//        sleep(2)
-//        app.alerts["Favorilere Eklendi"].scrollViews.otherElements.buttons["Yes"].tap()
-//
-//        loveButton.tap()
-//        app.alerts["Favorilerden Çıkarıldı"].scrollViews.otherElements.buttons["Yes"].tap()
-//
-//        let gamesButton = gamesNavigationBar.buttons["Games"]
-//        gamesButton.tap()
-//        app.scrollViews.children(matching: .other).element.children(matching: .other).element.tap()
-//        gamesButton.tap()
-//
-//        let findPopularGamesSearchField = gamesNavigationBar.searchFields["Find Popular Games..."]
-//        findPopularGamesSearchField.tap()
-//        //app.staticTexts["Upps! The game you want to search for could not be found. "].tap()
-//        app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.tap()
-//        gamesButton.tap()
-//        findPopularGamesSearchField.tap()
-//        app.tabBars["Tab Bar"].buttons["Favorites"].tap()
-                
-        
-    
     }
 }

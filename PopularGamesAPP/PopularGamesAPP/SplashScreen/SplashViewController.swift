@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - SplashViewController
 class SplashViewController: UIViewController {
     private let activityIndicator = UIActivityIndicatorView(style: .large)
 

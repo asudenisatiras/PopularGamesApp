@@ -34,7 +34,7 @@ class DetailsTests : XCTestCase {
         XCTAssertEqual(isInvokeddetailDownloadFinishedCount, 1)
         
         
-       
+        
     }
 }
 extension DetailsTests:DetailsViewModelDelegate{

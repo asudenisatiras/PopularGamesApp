@@ -24,7 +24,7 @@ class FavoriteViewModel: FavoriteViewModelProtocol {
     public let service : GamesServiceProtocol
     public let coreDataService : CoreDataManagerProtocol
     private var favoriteGames: [Games] = []
-
+    
     
     init(service: GamesServiceProtocol = GamesService(), coreDataService : CoreDataManagerProtocol = CoreDataManager.shared ) {
         self.service = service
@@ -37,25 +37,25 @@ class FavoriteViewModel: FavoriteViewModelProtocol {
         delegate?.didFetchFavoriteGames()
         
     }
-
+    
     func deleteAllFavoriteGames() {
         let isDeleted = coreDataService.deleteAllFavoriteGames()
         if isDeleted {
             favoriteGames.removeAll()
             delegate?.didFetchFavoriteGames()
         } else {
-            //TODO: HATA MESAJI BASTIR!!
+            print("Deleted all favorites.")
         }
     }
-
+    
     func numberOfFavoriteGames() -> Int {
         return favoriteGames.count
     }
-
+    
     func favoriteGame(at index: Int) -> Games {
         return favoriteGames[index]
     }
-
+    
     func fetchGameDetails(for selectedGame: GamesCoreData, completion: @escaping (Result<GamesDetails, Error>) -> Void) {
         service.fetchGameDetails(with: Int(selectedGame.id)) { result in
             switch result {

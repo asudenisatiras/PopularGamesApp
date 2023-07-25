@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//import GamesAPI // data models are defined in the API
+
 protocol HomeViewControllerProtocol{
     func setup()
     func setupPageControlHeight()
@@ -14,6 +14,7 @@ protocol HomeViewControllerProtocol{
     func updateNoDataLabelVisibility()
     func gamesListDownloadFinished()
 }
+
 extension HomeViewController {
     fileprivate enum Constants {
         static let pageControllerHeight: CGFloat = 220
@@ -30,6 +31,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecogn
     var pageControllerHeightAnchor: NSLayoutConstraint?
     var pageControlHeightAnchor: NSLayoutConstraint?
     var collectionViewTopToPageControlConstraint: NSLayoutConstraint!
+    var isSearchActive = false
     
     private lazy var homeStackView : UIStackView = {
         homeStackView = UIStackView(
@@ -42,20 +44,21 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecogn
         homeStackView.axis = .vertical
         return homeStackView
     }()
+    
     var viewModel: HomeViewModelProtocol! {
         didSet {
             viewModel.delegate = self
         }
     }
-    var isSearchActive = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         layout()
         viewModel.downloadGames(nil)
-        pageControllerSetup() // TODO: DÜZELT
+        pageControllerSetup()
     }
-    // TODO: P EKLE
+    
     private func createPageViewController(with viewModel: PageViewModel) -> UIViewController {
         let newViewController = PageViewController()
         newViewController.gameName = viewModel.gameName
@@ -74,7 +77,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UIGestureRecogn
 }
 
 extension HomeViewController {
-     func setup(){
+    
+    func setup(){
         view.backgroundColor = UIColor(red: 11/255, green: 4/255, blue: 22/255, alpha: 1.0)
         
         pageControl = UIPageControl()
@@ -113,7 +117,7 @@ extension HomeViewController {
         
         pageViewController.didMove(toParent: self)
         noDataLabel = UILabel()
-        noDataLabel.text = "Upps! The game you want to search for could not be found. "
+        noDataLabel.text = "Upps! The game you want to search for could not be found."
         noDataLabel.numberOfLines = 0
         noDataLabel.textColor = .white
         noDataLabel.textAlignment = .center
@@ -130,9 +134,7 @@ extension HomeViewController {
         noDataLabel.isHidden = true
     }
     
-    
-    
-     func setupPageControlHeight() {
+    func setupPageControlHeight() {
         pageControllerHeightAnchor = pageViewController.view.heightAnchor.constraint(
             equalToConstant: Constants.pageControllerHeight)
         pageControlHeightAnchor = pageControl.heightAnchor.constraint(
@@ -142,7 +144,7 @@ extension HomeViewController {
         pageControlHeightAnchor?.isActive = true
     }
     
-     func layout() {
+    func layout() {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -154,16 +156,15 @@ extension HomeViewController {
             .font: UIFont.systemFont(ofSize: 16)
         ]
         textField.attributedPlaceholder = NSAttributedString(string: "Find Popular Games...", attributes: attributes)
+        textField.textColor = .white
         if let glassIconView = textField.leftView as? UIImageView {
             glassIconView.tintColor = .white
         }
     }
 }
 
-
-
-
-extension HomeViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate{
+extension HomeViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let currentIndex = pages.firstIndex(of: viewController), currentIndex > 0 else {
             return nil
@@ -177,18 +178,19 @@ extension HomeViewController: UIPageViewControllerDataSource, UIPageViewControll
         }
         return pages[currentIndex + 1]
     }
+    
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed, let currentViewController = pageViewController.viewControllers?.first, let currentIndex = pages.firstIndex(of: currentViewController) {
             pageControl.currentPage = currentIndex
         }
     }
+    
     private func pageControllerSetup() {
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pageViewControllerTapped))
         pageViewController.view.addGestureRecognizer(tapGestureRecognizer)
         tapGestureRecognizer.delegate = self
     }
-    
     
     @objc private func pageViewControllerTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         
@@ -202,29 +204,28 @@ extension HomeViewController: UIPageViewControllerDataSource, UIPageViewControll
                     detailsViewController.viewModel = DetailsViewModel(gamesId: Int(id))
                     self?.navigationController?.pushViewController(detailsViewController, animated: true)
                 }
-
-                
             }
         }
     }
-    
-    
 }
 
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.gamesCount
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GamesListCollectionViewCell.reuseIdentifier, for: indexPath) as! GamesListCollectionViewCell
         cell.backgroundColor = UIColor(red: 31/255, green: 24/255, blue: 40/255, alpha: 1.0)
         
-        let games = viewModel.getGame(index: indexPath.row, pageController: false)//self.games[indexPath.row]
+        let games = viewModel.getGame(index: indexPath.row, pageController: false)
         
         let viewModel = GamesListCellViewModel(game: games)
         cell.viewModel = viewModel
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let id = viewModel.getGame(index: indexPath.row, pageController: false).id else {
             return
@@ -238,7 +239,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
 }
-extension HomeViewController: UICollectionViewDelegateFlowLayout{
+
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let width = (collectionView.frame.width - 48)
@@ -249,26 +252,30 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
     }
-    
 }
 
 extension HomeViewController {
-     func updateNoDataLabelVisibility() {
+    
+    func updateNoDataLabelVisibility() {
         if isSearchActive && viewModel.gamesCount == 0 {
             noDataLabel.isHidden = false
         } else {
             noDataLabel.isHidden = true
         }
     }
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
     }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         isSearchActive = !searchText.isEmpty
         viewModel.fetchGames(searchText)
@@ -276,16 +283,13 @@ extension HomeViewController {
         pageControl.isHidden = viewModel.isHeaderHidden
         pageViewController.setViewControllers([pages.first].compactMap { $0 }, direction: .forward, animated: false, completion: nil)
         
-        updateNoDataLabelVisibility() // Call the new method to update the label visibility
+        updateNoDataLabelVisibility()
     }
 }
 
-
-
 extension HomeViewController: HomeViewModelDelegate {
     
-    
-     func setupPages(with viewModels: [PageViewModel]) {
+    func setupPages(with viewModels: [PageViewModel]) {
         self.pages = viewModels.map { createPageViewController(with: $0) }
         self.pageControl.numberOfPages = self.pages.count
         self.pageViewController.setViewControllers([self.pages.first].compactMap { $0 }, direction: .forward, animated: true, completion: nil)
@@ -298,12 +302,11 @@ extension HomeViewController: HomeViewModelDelegate {
             guard let self else {
                 return
             }
+            
             setupPages(with: pageViewModels)
             collectionView.reloadData()
             updateNoDataLabelVisibility()
         }
-        
     }
-    
 }
 

@@ -16,6 +16,7 @@ class DetailsTests : XCTestCase {
     
     var isInvokedimageDownloadFinished = false
     var isInvokedimageDownloadFinishedCount = 0
+    
     override func setUp() {
         viewModel = DetailsViewModel(gamesId: 12, service: MockServiceAPI())
         viewModel.delegate = self
@@ -33,8 +34,6 @@ class DetailsTests : XCTestCase {
         XCTAssertTrue(isInvokeddetailDownloadFinished)
         XCTAssertEqual(isInvokeddetailDownloadFinishedCount, 1)
         
-        
-        
     }
 }
 extension DetailsTests:DetailsViewModelDelegate{
@@ -48,6 +47,5 @@ extension DetailsTests:DetailsViewModelDelegate{
         isInvokedimageDownloadFinished = true
         isInvokedimageDownloadFinishedCount += 1
     }
-    
-    
+
 }

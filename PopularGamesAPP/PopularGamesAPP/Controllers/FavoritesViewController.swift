@@ -42,11 +42,36 @@ class FavoriteViewController: UIViewController {
     private func fetchFavoriteGames() {
         viewModel.fetchFavoriteGames()
     }
-    
+
+//    @objc private func deleteAllFavoritesTapped() {
+//        let alertController = UIAlertController(title: "Are you sure you want to delete all your favorite games?", message: nil, preferredStyle: .actionSheet)
+//
+//        let deleteAction = UIAlertAction(title: "Yes", style: .destructive) { [weak self] _ in
+//            self?.viewModel.deleteAllFavoriteGames()
+//        }
+//
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//
+//        alertController.addAction(deleteAction)
+//        alertController.addAction(cancelAction)
+//
+//        present(alertController, animated: true, completion: nil)
+//    }
     @objc private func deleteAllFavoritesTapped() {
-        viewModel.deleteAllFavoriteGames()
+        let alertController = UIAlertController(title: "Are you sure you want to delete all your favorite games?", message: nil, preferredStyle: .alert)
+        
+        let deleteAction = UIAlertAction(title: "Yes", style: .destructive) { [weak self] _ in
+            self?.viewModel.deleteAllFavoriteGames()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
-    
+
 }
 
 extension FavoriteViewController: FavoriteViewModelDelegate {

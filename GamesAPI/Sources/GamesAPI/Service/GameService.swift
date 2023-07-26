@@ -5,7 +5,6 @@
 //  Created by Asude Nisa Tıraş on 14.07.2023.
 //
 
-
 import Foundation
 
 enum Constants: String {

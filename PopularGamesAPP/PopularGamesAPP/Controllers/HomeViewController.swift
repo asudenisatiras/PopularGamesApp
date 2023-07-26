@@ -301,8 +301,7 @@ extension HomeViewController: HomeViewModelDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self else {
                 return
-            }
-            
+            } 
             setupPages(with: pageViewModels)
             collectionView.reloadData()
             updateNoDataLabelVisibility()

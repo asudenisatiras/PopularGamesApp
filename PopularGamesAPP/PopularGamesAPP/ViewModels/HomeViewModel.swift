@@ -34,7 +34,7 @@ protocol HomeViewModelProtocol: AnyObject {
     func getGame(index: Int,pageController: Bool) -> Games
 }
 // MARK: - HomeViewModel Class
-final class HomeViewModel: NSObject {
+final class HomeViewModel {
     var allGames: [Games] = []
     var games: [Games] = []
     var pageControlGames : [Games] = []
@@ -111,7 +111,7 @@ extension HomeViewModel: HomeViewModelProtocol {
             downloadGames(searchText)
         }
     }
-
+//MARK: - Fetch Games Call/ PageViewController Setup
     func downloadGames(
         _ searchText: String?
     ) {
@@ -119,7 +119,6 @@ extension HomeViewModel: HomeViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let games):
-                
                 
                 self.allGames = games
                 

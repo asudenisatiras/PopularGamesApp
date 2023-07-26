@@ -55,29 +55,16 @@ class MockCoreDataService: CoreDataManagerProtocol {
         return gamesCoreData.contains(where: { $0.id == id })
     }
 
-//    func removeFavoriteGame(id: Int32) {
-//        favoriteGameIds.remove(id)
-//
-//        if let index = gamesCoreData.firstIndex(where: { $0.id == id }) {
-//            gamesCoreData.remove(at: index)
-//            print("Veri silindi. ID: \(id)")
-//        }
-//    }
+
     func removeFavoriteGame(id: Int32) {
-           favoriteGameIds.remove(id)
-           // Oyunu gamesCoreData'dan kaldırmadan sadece favoriteGameIds set'inden kaldıralım
-       }
+        favoriteGameIds.remove(id)
+    }
 
     func fetchFavoriteGames() -> [Games] {
        
         return gamesCoreData
     }
 
-//    func deleteAllFavoriteGames() -> Bool {
-//        gamesCoreData.removeAll()
-//        favoriteGameIds.removeAll()
-//        return true
-//    }
     func deleteAllFavoriteGames() -> Bool {
             gamesCoreData.removeAll()
             favoriteGameIds.removeAll()

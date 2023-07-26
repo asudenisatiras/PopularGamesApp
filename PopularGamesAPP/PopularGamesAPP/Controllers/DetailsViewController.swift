@@ -31,7 +31,6 @@ class DetailsViewController: UIViewController {
             viewModel.delegate = self
         }
     }
-    
     convenience init(gameImage: UIImage?) {
         self.init()
         self.gameImage = gameImage
@@ -42,7 +41,7 @@ class DetailsViewController: UIViewController {
         image.layer.cornerRadius = 12
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill
-        image.backgroundColor = .purple
+        image.image = UIImage(named: "loading")
         return image
     }()
     
@@ -95,7 +94,7 @@ class DetailsViewController: UIViewController {
         layout()
           
     }
-    
+   
     private func updateFavoriteButton() {
         guard let gameid = viewModel.gameId else { return }
         let isFavorite = CoreDataManager.shared.isGameIdSaved(gameid)
@@ -151,10 +150,7 @@ class DetailsViewController: UIViewController {
         metacriticRate.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        for constraint in constraints {
-            constraint.isActive = false
-        }
-        
+        NSLayoutConstraint.deactivate(constraints)
         constraints = [
             nameOfGameLabel.heightAnchor.constraint(equalToConstant: nameLabelSize.height),
             releaseDate.heightAnchor.constraint(equalToConstant: releaseLabelSize.height),
@@ -230,43 +226,74 @@ extension DetailsViewController {
         
     }
     
+    //    @objc private func favoriteButtonTapped() {
+    //
+    //        let isFavorite = viewModel.isCoreDataSaved()
+    //        if isFavorite {
+    //                self.presentBottomAlert(
+    //                title: "Favorite Updates",
+    //                message: "Do you want this game to be removed from the favorites?",
+    //                okTitle: "Yes",
+    //                cancelTitle: "Cancel",
+    //                okAction: { [weak self] in
+    //                    guard let self else {
+    //                        return }
+    //                    viewModel.removeFavoriteGame()
+    //
+    //                    let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
+    //                    navigationItem.rightBarButtonItem = favoriteBarButton
+    //                    updateFavoriteButton()
+    //                }
+    //            )
+    //        } else {
+    //            let backgroundImageData = imageView.image?.pngData()?.base64EncodedString() ?? ""
+    //
+    //            self.presentBottomAlert(
+    //                title: "Favorite Updates",
+    //                message: "Do you want this game to be added to your favorites?",
+    //                okTitle: "Yes",
+    //                cancelTitle: "Cancel",
+    //                okAction: {
+    //                    self.viewModel.saveGameData(imageData: backgroundImageData)
+    //                    let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(self.favoriteButtonTapped))
+    //                    self.navigationItem.rightBarButtonItem = favoriteBarButton
+    //                    self.updateFavoriteButton()
+    //                }
+    //            )
+    //        }
+    //    }
+    //
+    //}
     @objc private func favoriteButtonTapped() {
-        
         let isFavorite = viewModel.isCoreDataSaved()
         if isFavorite {
-                self.presentBottomAlert(
-                title: "Favorite Updates",
-                message: "Do you want this game to be removed from the favorites?",
-                okTitle: "Yes",
-                cancelTitle: "Cancel",
-                okAction: { [weak self] in
-                    guard let self else {
-                        return }
-                    viewModel.removeFavoriteGame()
-                    
-                    let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
-                    navigationItem.rightBarButtonItem = favoriteBarButton
-                    updateFavoriteButton()
-                }
-            )
+            let alert = UIAlertController(title: "Favorite Updates", message: "Do you want this game to be removed from the favorites?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
+                guard let self = self else { return }
+                self.viewModel.removeFavoriteGame()
+                
+                let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(self.favoriteButtonTapped))
+                self.navigationItem.rightBarButtonItem = favoriteBarButton
+                self.updateFavoriteButton()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         } else {
             let backgroundImageData = imageView.image?.pngData()?.base64EncodedString() ?? ""
             
-            self.presentBottomAlert(
-                title: "Favorite Updates",
-                message: "Do you want this game to be added to your favorites?",
-                okTitle: "Yes",
-                cancelTitle: "Cancel",
-                okAction: {
-                    self.viewModel.saveGameData(imageData: backgroundImageData)
-                    let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(self.favoriteButtonTapped))
-                    self.navigationItem.rightBarButtonItem = favoriteBarButton
-                    self.updateFavoriteButton()
-                }
-            )
+            let alert = UIAlertController(title: "Favorite Updates", message: "Do you want this game to be added to your favorites?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
+                guard let self = self else { return }
+                self.viewModel.saveGameData(imageData: backgroundImageData)
+                
+                let favoriteBarButton = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(self.favoriteButtonTapped))
+                self.navigationItem.rightBarButtonItem = favoriteBarButton
+                self.updateFavoriteButton()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
-    
 }
 extension DetailsViewController {
     

@@ -1,4 +1,4 @@
-![Ekran Resmi 2023-07-27 23 38 23](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/28f9d564-6a10-4144-95d6-8ffdf7ad42b0)
+![Ekran Resmi 2023-07-28 00 09 19](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/a3e19a67-828e-4ada-b8e0-6623e0403051)
 # PopularGamesApp
 Easily access your favorite games!
 ### Application Summary
@@ -6,6 +6,9 @@ PopularGamesAPP is a game database application that users who are curious about 
 The user-friendly interface of POPULAR GAMES APP allows you to easily discover games and follow the games they want by adding them to favorites.This game database application contributes to a more enjoyable experience in the gaming world by providing a reliable and comprehensive resource for gaming enthusiasts.
 ## Features Used
 - MVVM DESIGN PATTERN
+  
+![mvvm](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/85c9fb8d-e2ef-4078-8ffe-766c9be172cf)
+
 - Splash Screen for Internet Control 
 - UIKit 
 - Core Data

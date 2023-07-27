@@ -1,7 +1,7 @@
 ![Ekran Resmi 2023-07-28 00 09 19](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/a995c114-7092-4731-a6b8-965259a03e7e)
 # PopularGamesApp
 
-Easily access your favorite games!
+## Easily access your favorite games!
 ### Application Summary
 PopularGamesAPP is a game database application that users who are curious about the gaming world can choose. This application provides detailed information about the popular games on various platforms. Game lovers can find out general information about games and release dates through the PopularGamesAPP.
 The user-friendly interface of POPULAR GAMES APP allows you to easily discover games and follow the games they want by adding them to favorites.This game database application contributes to a more enjoyable experience in the gaming world by providing a reliable and comprehensive resource for gaming enthusiasts.

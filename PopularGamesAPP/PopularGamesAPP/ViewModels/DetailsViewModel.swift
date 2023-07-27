@@ -92,7 +92,7 @@ final class DetailsViewModel: DetailsViewModelProtocol {
         if let imageData = try? Data(contentsOf: backgroundImageURL) {
             delegate?.imageDownloadFinished(data: imageData)
         } else {
-            //TODO: When Image download failed, show error image.
+         print("Image download isn't started.")
         }
     }
     

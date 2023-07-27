@@ -23,7 +23,7 @@ class PageViewController: UIViewController{
     
     public var gamesImage: UIImageView = {
         let image = UIImageView()
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleToFill
         image.clipsToBounds = true
         image.layer.cornerRadius = 12
         return image

@@ -46,3 +46,7 @@ The user-friendly interface of POPULAR GAMES APP allows you to easily discover g
 ![Ekran Resmi 2023-07-28 00 16 02](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/347e056e-1bca-46ee-bd90-8593ab45adbe)
 
 ![Ekran Resmi 2023-07-28 00 16 15](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/cf59d8eb-5c43-4411-bc91-fbb1cdf50d20)
+![Ekran Resmi 2023-07-28 01 02 54](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/3bc27a7b-2983-4242-9e7c-f4bb5472f818)
+![Ekran Resmi 2023-07-28 01 03 00](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/690ca7aa-075a-4b81-a8bf-fb5dbe9631b1)
+
+

@@ -33,7 +33,6 @@
 		D3B0FE422A6C22B60080F0E4 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0FE412A6C22B60080F0E4 /* SplashViewController.swift */; };
 		D3B0FE442A6C22C20080F0E4 /* Reachabilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0FE432A6C22C20080F0E4 /* Reachabilty.swift */; };
 		D3B0FE4A2A6E9F190080F0E4 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0FE492A6E9F190080F0E4 /* DetailsViewModel.swift */; };
-		D3B0FE4F2A6F033D0080F0E4 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0FE4E2A6F033D0080F0E4 /* OnboardingViewController.swift */; };
 		D3B0FE512A6F2AA70080F0E4 /* MockServisAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0FE502A6F2AA70080F0E4 /* MockServisAPI.swift */; };
 		D3B0FE562A6F39F50080F0E4 /* DetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0FE552A6F39F50080F0E4 /* DetailsTests.swift */; };
 		D3B0FE592A6F41980080F0E4 /* FavoritesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0FE582A6F41980080F0E4 /* FavoritesTest.swift */; };
@@ -88,7 +87,6 @@
 		D3B0FE412A6C22B60080F0E4 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		D3B0FE432A6C22C20080F0E4 /* Reachabilty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachabilty.swift; sourceTree = "<group>"; };
 		D3B0FE492A6E9F190080F0E4 /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
-		D3B0FE4E2A6F033D0080F0E4 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		D3B0FE502A6F2AA70080F0E4 /* MockServisAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServisAPI.swift; sourceTree = "<group>"; wrapsLines = 1; };
 		D3B0FE552A6F39F50080F0E4 /* DetailsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTests.swift; sourceTree = "<group>"; };
 		D3B0FE582A6F41980080F0E4 /* FavoritesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTest.swift; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 		D365D65C2A60A0B80058E77B /* PopularGamesAPP */ = {
 			isa = PBXGroup;
 			children = (
-				D3B0FE4D2A6F032C0080F0E4 /* OnboardingScreen */,
 				D3B0FE402A6C229D0080F0E4 /* SplashScreen */,
 				D36E91012A6735FC00E528F7 /* ViewModels */,
 				D36E90F02A6481F400E528F7 /* Helpers */,
@@ -263,14 +260,6 @@
 				D3B0FE432A6C22C20080F0E4 /* Reachabilty.swift */,
 			);
 			path = SplashScreen;
-			sourceTree = "<group>";
-		};
-		D3B0FE4D2A6F032C0080F0E4 /* OnboardingScreen */ = {
-			isa = PBXGroup;
-			children = (
-				D3B0FE4E2A6F033D0080F0E4 /* OnboardingViewController.swift */,
-			);
-			path = OnboardingScreen;
 			sourceTree = "<group>";
 		};
 		D3B0FE522A6F38EC0080F0E4 /* MockDetailsView */ = {
@@ -427,7 +416,6 @@
 				D365D69E2A60A2280058E77B /* FavoritesViewController.swift in Sources */,
 				D36E910D2A687B1700E528F7 /* EmptyFavoritesCollectionViewCell.swift in Sources */,
 				D3B0FE442A6C22C20080F0E4 /* Reachabilty.swift in Sources */,
-				D3B0FE4F2A6F033D0080F0E4 /* OnboardingViewController.swift in Sources */,
 				D3B0FE422A6C22B60080F0E4 /* SplashViewController.swift in Sources */,
 				D36E90F82A65D9AE00E528F7 /* PageViewController.swift in Sources */,
 				D365D69A2A60A20E0058E77B /* MainTabBarController.swift in Sources */,

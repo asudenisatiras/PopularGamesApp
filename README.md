@@ -21,7 +21,8 @@ The user-friendly interface of POPULAR GAMES APP allows you to easily discover g
 - UI Test
 ## API Reference
 ### Accessing Games: 
-<img width="389" alt="Ekran Resmi 2023-07-27 23 44 24" src="https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/75fa2605-35ff-45b8-ad9d-abebe034cec5">
+<img width="390" alt="Ekran Resmi 2023-07-28 00 14 45" src="https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/5e705098-2970-4752-959c-6d069fa713ad">
+
 
 
 | Get a list of Games	 | To acces list | Your API Key |
@@ -38,7 +39,10 @@ The user-friendly interface of POPULAR GAMES APP allows you to easily discover g
  More Help: (https://rawg.io/apidocs)https://rawg.io/apidocs
 ```
 ## Application Screens 
-![Ekran Resmi 2023-07-27 23 58 09](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/c6c723de-e689-451c-ae67-331f7688d032)
-![Ekran Resmi 2023-07-27 23 59 05](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/643542ff-87f3-45fb-96c8-d0879d62cf9e)
-![Ekran Resmi 2023-07-28 00 01 13](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/24e52558-1a05-4b3e-b63e-e76312401d9b)
-![Ekran Resmi 2023-07-28 00 02 19](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/55a4af46-38cf-4cd1-9c20-b4f7ac8161a0)
+![Ekran Resmi 2023-07-28 00 15 32](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/35e1dc97-3e1d-4727-ab03-d2db3f192b0d)
+
+![Ekran Resmi 2023-07-28 00 17 27](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/09d73720-b0f8-4e70-97cc-5760d7b05e94)
+
+![Ekran Resmi 2023-07-28 00 16 02](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/347e056e-1bca-46ee-bd90-8593ab45adbe)
+
+![Ekran Resmi 2023-07-28 00 16 15](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/cf59d8eb-5c43-4411-bc91-fbb1cdf50d20)

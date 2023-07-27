@@ -1,5 +1,6 @@
-![Ekran Resmi 2023-07-28 00 09 19](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/a3e19a67-828e-4ada-b8e0-6623e0403051)
+![Ekran Resmi 2023-07-28 00 09 19](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/a995c114-7092-4731-a6b8-965259a03e7e)
 # PopularGamesApp
+
 Easily access your favorite games!
 ### Application Summary
 PopularGamesAPP is a game database application that users who are curious about the gaming world can choose. This application provides detailed information about the popular games on various platforms. Game lovers can find out general information about games and release dates through the PopularGamesAPP.
@@ -7,7 +8,8 @@ The user-friendly interface of POPULAR GAMES APP allows you to easily discover g
 ## Features Used
 - MVVM DESIGN PATTERN
   
-![mvvm](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/85c9fb8d-e2ef-4078-8ffe-766c9be172cf)
+![mvvm](https://github.com/asudenisatiras/PopularGamesApp/assets/127339561/dd89eedc-884c-4ed0-9f8f-7a82c17b2faf)
+
 
 - Splash Screen for Internet Control 
 - UIKit 
